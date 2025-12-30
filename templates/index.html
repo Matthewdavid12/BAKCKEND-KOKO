@@ -1,96 +1,543 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Koko AI</title>
-    <style>
-        body {
-            font-family: Arial;
-            background: #ffffff;
-            color: rgb(5, 5, 5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Koko AI</title>
 
-        #chat {
-            width: 400px;
-        }
-
-        textarea {
-            width: 100%;
-            height: 80px;
-        }
-
-        button {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-        }
-
-        #messages {
-            margin-bottom: 10px;
-            min-height: 200px;
-            border: 1px solid #444;
-            padding: 10px;
-        }
-    </style>
-</head>
-<body>
-
-<div id="chat">
-
-   <div class="center-img">
-    <img src="{{ url_for('static', filename='KOKO.jpg') }}" width="150">
-    </div>
-
-    <style>
-    .center-img {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 15px;
+  <style>
+    :root{
+      --bg0:#07070b;
+      --bg1:#0b0b12;
+      --card:#12121b;
+      --card2:#141421;
+      --border:rgba(255,255,255,.10);
+      --text:#e9e9f3;
+      --muted:rgba(233,233,243,.70);
+      --muted2:rgba(233,233,243,.45);
+      --accent:#8b5cf6; /* purple */
+      --accent2:#6366f1; /* indigo */
+      --shadow: 0 18px 45px rgba(0,0,0,.55);
+      --radius:16px;
     }
 
-    </style>
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 55% 20%, rgba(139,92,246,.18), transparent 60%),
+        radial-gradient(900px 600px at 20% 10%, rgba(99,102,241,.14), transparent 55%),
+        linear-gradient(180deg, var(--bg1), var(--bg0));
+      overflow:auto;
+    }
 
-    <h2 style="text-align:center;">Koko 🐨</h2>
-    <div id="messages"></div>
+    /* Layout */
+    .app{
+      display:flex;
+      height:100vh;
+      width:100vw;
+    }
 
-    <textarea id="input" placeholder="Talk to Koko..."></textarea>
-    <button onclick="sendMessage()">SEND</button>
-</div>
+    /* Sidebar */
+    .sidebar{
+      width:280px;
+      min-width:240px;
+      background: rgba(10,10,16,.70);
+      border-right:1px solid var(--border);
+      backdrop-filter: blur(10px);
+      padding:16px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
 
-<script>
-  async function sendMessage() {
-    const input = document.getElementById("input");
-    const messages = document.getElementById("messages");
+    .sb-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:8px 6px;
+    }
 
-    const userText = input.value;
-    if (!userText.trim()) return;
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .brand img{
+      width:36px; height:36px;
+      border-radius:12px;
+      object-fit:cover;
+      border:1px solid var(--border);
+    }
+    .brand .name{
+      display:flex; flex-direction:column;
+      line-height:1.1;
+    }
+    .brand .name b{font-size:14px}
+    .brand .name span{font-size:12px; color:var(--muted2)}
 
-    input.value = "";
+    .sb-btn{
+      width:100%;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      color:var(--text);
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      transition:.18s ease;
+    }
+    .sb-btn:hover{
+      background: rgba(255,255,255,.07);
+      border-color: rgba(255,255,255,.16);
+      transform: translateY(-1px);
+    }
 
-    messages.innerHTML += "<b>You:</b> " + userText + "<br>";
+    .sb-section-title{
+      margin-top:8px;
+      font-size:12px;
+      color:var(--muted2);
+      padding:4px 6px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
 
-    const response = await fetch("/chat", {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({message: userText})
-    });
+    .sb-chatlist{
+      flex:1;
+      overflow:auto;
+      padding-right:4px;
+    }
+    .chat-item{
+      padding:10px 12px;
+      border-radius:12px;
+      color:var(--muted);
+      cursor:pointer;
+      border:1px solid transparent;
+      transition:.15s ease;
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+    .chat-item:hover{
+      background: rgba(255,255,255,.05);
+      border-color: rgba(255,255,255,.08);
+      color:var(--text);
+    }
 
-    const data = await response.json();
-    messages.innerHTML += "<b>Koko:</b> " + data.reply + "<br><br>";
+    .sb-bottom{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      padding-top:10px;
+      border-top:1px solid var(--border);
+    }
+
+    .pill{
+      border:none;
+      border-radius:14px;
+      padding:11px 12px;
+      cursor:pointer;
+      color:var(--text);
+      background: linear-gradient(90deg, rgba(139,92,246,.95), rgba(99,102,241,.95));
+      box-shadow: 0 10px 25px rgba(99,102,241,.18);
+      transition:.15s ease;
+    }
+    .pill:hover{transform: translateY(-1px); filter:saturate(1.1)}
+    .ghost{
+      background: rgba(255,255,255,.05);
+      border:1px solid var(--border);
+      box-shadow:none;
+    }
+
+    /* Main area */
+    .main{
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:flex-start;
+      padding:26px 22px 18px;
+      gap:18px;
+      overflow:auto;
+    }
+
+    .hero{
+      width:min(1100px, 100%);
+      margin-top:10px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:18px;
+    }
+
+    .hero h1{
+      margin:0;
+      font-size:34px;
+      font-weight:800;
+      letter-spacing:.2px;
+      text-align:center;
+    }
+
+    .hero-sub{
+      color:var(--muted);
+      font-size:13px;
+      text-align:center;
+      margin-top:-6px;
+    }
+
+    .columns{
+      width:min(1100px, 100%);
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+      margin-top:6px;
+    }
+
+    .col{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .col-title{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      color:var(--muted);
+      font-size:13px;
+      margin:8px 0 2px;
+    }
+    .icon{
+      width:28px; height:28px;
+      display:grid; place-items:center;
+      border:1px solid var(--border);
+      border-radius:10px;
+      background: rgba(255,255,255,.04);
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      padding:14px 14px;
+      box-shadow: var(--shadow);
+      min-height:64px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      color:var(--text);
+    }
+    .card small{
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.35;
+    }
+
+    /* Slider row */
+    .slider-wrap{
+      width:min(720px, 92%);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:10px;
+      margin-top:8px;
+    }
+    .slider-labels{
+      width:100%;
+      display:flex;
+      justify-content:space-between;
+      color:var(--muted2);
+      font-size:12px;
+      padding:0 4px;
+    }
+    input[type="range"]{
+      width:100%;
+      accent-color: var(--accent);
+    }
+
+    /* Chat area */
+      .chat-shell{
+    width: min(900px, 96%);
+    display: flex;
+    flex-direction: column;
+    flex: 1;           /* you can change this (60vh / 75vh) */
   }
 
-  const input = document.getElementById("input");
+  .koko-float{
+    position: fixed;
+    bottom: 16px;
+    left: 16px;
+    z-index: 50;           /* below UI, above background */
+    pointer-events: none; /* don't block clicks */
+  }
 
-  input.addEventListener("keydown", function (e) {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      sendMessage();
+  .koko-float img{
+    width: 96px;           /* 🔴 THIS was missing */
+    height: auto;
+    max-width: 120px;
+    border-radius: 18px;
+    box-shadow:
+      0 8px 30px rgba(0,0,0,.6),
+      0 0 30px rgba(139,92,246,.35);
+    opacity: .95;
+  }
+
+
+    #messages{
+      min-height: 120px;
+      max-height: none;     /* ✅ let it grow */
+      overflow-y: visible;  /* ✅ no scroll until you want it */
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      background: rgba(0,0,0,.20);
+      backdrop-filter: blur(8px);
+      padding:14px;
+      box-shadow: var(--shadow);
+      font-size:14px;
+      line-height:1.45;
     }
-  });
-</script>
 
+    .msg-you{color: #ffffff;}
+    .msg-bot{color: rgba(233,233,243,.92);}
+
+    .promptbar{
+      position: sticky;
+      bottom: 0;
+      margin-top: 12px;
+
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,.40);  /* slightly stronger so it looks pinned */
+      border-radius: 18px;
+      padding: 10px 12px;
+      box-shadow: var(--shadow);
+    }
+
+    .mic{
+      width:34px; height:34px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.05);
+      display:grid; place-items:center;
+      color: var(--muted);
+      user-select:none;
+    }
+
+    textarea{
+      flex:1;
+      resize:none;
+      height:44px;
+      border:none;
+      outline:none;
+      background: transparent;
+      color: var(--text);
+      font-size:14px;
+      padding:10px 4px;
+    }
+    textarea::placeholder{color: rgba(233,233,243,.40)}
+
+    .send{
+      width:42px; height:42px;
+      border:none;
+      border-radius:14px;
+      cursor:pointer;
+      color:white;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      display:grid; place-items:center;
+      transition:.15s ease;
+    }
+    .send:hover{transform: translateY(-1px); filter:saturate(1.1)}
+    .send:disabled{opacity:.55; cursor:not-allowed; transform:none}
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .sidebar{display:none;}
+      .columns{grid-template-columns:1fr; }
+      #messages{height:260px;}
+      .hero h1{font-size:30px;}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sb-top">
+        <div class="brand">
+          <img src="{{ url_for('static', filename='KOKO.jpg') }}" alt="Koko"/>
+          <div class="name">
+            <b>Koko AI 🐨</b>
+            <span>Enhanced</span>
+          </div>
+        </div>
+      </div>
+
+      <button class="sb-btn" onclick="newChat()">
+        <span>+ New Chat</span>
+        <span style="color:var(--muted2)">Ctrl+K</span>
+      </button>
+
+      <div class="sb-section-title">Chats</div>
+
+
+      <div class="sb-bottom">
+        <button class="pill ghost" onclick="scrollToPrompt()">Text Mode</button>
+        <button class="pill ghost" onclick="clearMessages()">Clear</button>
+        <button class="pill" onclick="alert('Hook this to your login/logout later')">Logout</button>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+      <section class="hero">
+        <h1>Koko 🐨</h1>
+
+        <div class="slider-wrap">
+          <div class="slider-labels">
+            <span>Logical</span><span>Balanced</span><span>Creative</span>
+          </div>
+          <input id="modeSlider" type="range" min="0" max="2" value="1" />
+        </div>
+      </section>
+
+      <!-- Chat -->
+      <section class="chat-shell" id="promptArea">
+        <div id="messages"></div>
+
+        <div class="promptbar">
+          <div class="mic">🎙️</div>
+          <textarea id="input" placeholder="Message Koko... (Enter to send, Shift+Enter for new line)"></textarea>
+          <button class="send" id="sendBtn" onclick="sendMessage()">➤</button>
+
+
+        <div class="koko-float">
+    <img src="{{ url_for('static', filename='KOKORESPONDING.png') }}" alt="Koko">
+  </div>
+
+        </div>
+      </section>
+    </main>
+  </div>
+
+   
+
+  <script>
+    function newChat(){
+      clearMessages();
+      document.getElementById("input").focus();
+    }
+
+    function clearMessages(){
+      document.getElementById("messages").innerHTML = "";
+    }
+
+    function scrollToPrompt(){
+      document.getElementById("promptArea").scrollIntoView({behavior:"smooth", block:"end"});
+      document.getElementById("input").focus();
+    }
+
+    function appendLine(who, text){
+      const messages = document.getElementById("messages");
+      const div = document.createElement("div");
+      div.className = who === "You" ? "msg-you" : "msg-bot";
+      div.innerHTML = "<b>" + who + ":</b> " + escapeHtml(text);
+      messages.appendChild(div);
+      messages.appendChild(document.createElement("br"));
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    function escapeHtml(str){
+      return str
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+async function sendMessage() {
+  const input = document.getElementById("input");
+  const sendBtn = document.getElementById("sendBtn");
+  const messages = document.getElementById("messages");
+
+  const userText = input.value.trim();
+  if (!userText) return;
+
+  input.value = "";
+  sendBtn.disabled = true;
+
+  appendLine("You", userText);
+
+  // create empty assistant line
+  const line = document.createElement("div");
+  line.className = "msg-bot";
+  line.innerHTML = "<b>Koko:</b> <span class='stream'></span>";
+  messages.appendChild(line);
+  messages.appendChild(document.createElement("br"));
+
+  const span = line.querySelector(".stream");
+
+  try {
+    const response = await fetch("/chat_stream", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({ message: userText })
+    });
+
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = "";
+
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+
+      buffer += decoder.decode(value, { stream: true });
+      const parts = buffer.split("\n\n");
+      buffer = parts.pop();
+
+      for (const part of parts) {
+        if (!part.startsWith("data: ")) continue;
+        const payload = JSON.parse(part.slice(6));
+
+        if (payload.delta) {
+          span.textContent += payload.delta;
+          messages.scrollTop = messages.scrollHeight;
+        }
+      }
+    }
+  } catch (err) {
+    span.textContent = "Error: stream failed.";
+  } finally {
+    sendBtn.disabled = false;
+    input.focus();
+  }
+}
+
+    
+
+    // Enter to send (Shift+Enter newline)
+    const inputEl = document.getElementById("input");
+    inputEl.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+      
+    });
+  </script>
 </body>
 </html>
