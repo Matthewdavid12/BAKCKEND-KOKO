@@ -7,12 +7,12 @@
 
   <style>
     :root{
-      --bg0:#07070b;
-      --bg1:#0b0b12;
+      --bg0:#ffffff;
+      --bg1:#fffdfd;
       --card:#12121b;
       --card2:#141421;
       --border:rgba(255,255,255,.10);
-      --text:#e9e9f3;
+      --text:#000000;
       --muted:rgba(233,233,243,.70);
       --muted2:rgba(233,233,243,.45);
       --accent:#8b5cf6; /* purple */
@@ -45,13 +45,32 @@
     .sidebar{
       width:280px;
       min-width:240px;
-      background: rgba(10,10,16,.70);
-      border-right:1px solid var(--border);
-      backdrop-filter: blur(10px);
-      padding:16px;
+      height:100vh;
       display:flex;
       flex-direction:column;
       gap:12px;
+      padding:16px;
+      background: rgb(170, 206, 253);
+      border-right:1px solid var(--border);
+      backdrop-filter: blur(10px);
+      overflow:hidden;        /* ✅ prevent sidebar itself from scrolling */
+    }
+
+    .sb-chatlist{
+      flex:1;                 /* ✅ takes remaining height */
+      min-height:0;           /* ✅ allows scrolling */
+      overflow-y:auto;        /* ✅ scroll list */
+      padding-right:4px;
+    }
+
+    .sb-bottom{
+      margin-top:auto;        /* ✅ pins buttons to bottom */
+      flex-shrink:0;          /* ✅ never gets squeezed */
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      padding-top:10px;
+      border-top:1px solid var(--border);
     }
 
     .sb-top{
@@ -68,7 +87,7 @@
       gap:10px;
     }
     .brand img{
-      width:36px; height:36px;
+      width: 70px; height: 70px;
       border-radius:12px;
       object-fit:cover;
       border:1px solid var(--border);
@@ -78,14 +97,14 @@
       line-height:1.1;
     }
     .brand .name b{font-size:14px}
-    .brand .name span{font-size:12px; color:var(--muted2)}
+    .brand .name span{font-size:12px; color:black}
 
     .sb-btn{
       width:100%;
       padding:10px 12px;
       border-radius:12px;
       border:1px solid var(--border);
-      background: rgba(255,255,255,.04);
+      background: rgba(0, 0, 0, 0.04);
       color:var(--text);
       cursor:pointer;
       display:flex;
@@ -103,7 +122,7 @@
     .sb-section-title{
       margin-top:8px;
       font-size:12px;
-      color:var(--muted2);
+      color:black;
       padding:4px 6px;
       text-transform:uppercase;
       letter-spacing:.08em;
@@ -117,7 +136,7 @@
     .chat-item{
       padding:10px 12px;
       border-radius:12px;
-      color:var(--muted);
+      color:black;
       cursor:pointer;
       border:1px solid transparent;
       transition:.15s ease;
@@ -145,7 +164,7 @@
       padding:11px 12px;
       cursor:pointer;
       color:var(--text);
-      background: linear-gradient(90deg, rgba(139,92,246,.95), rgba(99,102,241,.95));
+      background: linear-gradient(90deg, rgb(249, 250, 250), rgb(249, 250, 250));
       box-shadow: 0 10px 25px rgba(99,102,241,.18);
       transition:.15s ease;
     }
@@ -157,32 +176,31 @@
     }
 
     /* Main area */
-    .main{
-      flex:1;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:flex-start;
-      padding:26px 22px 18px;
-      gap:18px;
-      overflow:auto;
-    }
+  .main{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:stretch;
+    justify-content:flex-start;
+    padding:26px 22px 18px;
+    gap:18px;
+    overflow:hidden;  /* ✅ stop whole page scrolling */
+    min-height:0;     /* ✅ needed for inner scrolling */
+  }
 
     .hero{
-      width:min(1100px, 100%);
-      margin-top:10px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:18px;
+      width: 100%;
+      max-width: 900px;   /* match your chat-shell max-width */
+      margin: 10px auto 0; /* ✅ centers the whole hero block */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
     }
 
     .hero h1{
-      margin:0;
-      font-size:34px;
-      font-weight:800;
-      letter-spacing:.2px;
-      text-align:center;
+      width: 100%;
+      text-align: center;
     }
 
     .hero-sub{
@@ -242,15 +260,6 @@
       line-height:1.35;
     }
 
-    /* Slider row */
-    .slider-wrap{
-      width:min(720px, 92%);
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:10px;
-      margin-top:8px;
-    }
     .slider-labels{
       width:100%;
       display:flex;
@@ -265,109 +274,169 @@
     }
 
     /* Chat area */
-      .chat-shell{
-    width: min(900px, 96%);
-    display: flex;
-    flex-direction: column;
-    flex: 1;           /* you can change this (60vh / 75vh) */
+    .chat-shell{
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    flex: 1;
+    min-height: 0;
+    display:flex;
+    flex-direction:column;
   }
 
   .koko-float{
     position: fixed;
     bottom: 16px;
-    left: 16px;
+    left: calc(280px + 16px);
     z-index: 50;           /* below UI, above background */
     pointer-events: none; /* don't block clicks */
   }
 
   .koko-float img{
-    width: 96px;           /* 🔴 THIS was missing */
-    height: auto;
-    max-width: 120px;
+    width: 200px;           /* 🔴 THIS was missing */
+    height: 250px;
     border-radius: 18px;
-    box-shadow:
-      0 8px 30px rgba(0,0,0,.6),
-      0 0 30px rgba(139,92,246,.35);
     opacity: .95;
   }
 
+  .sidebar{
+    display:flex;
+    flex-direction:column;
+    height:100vh;          /* important */
+  }
 
-    #messages{
-      min-height: 120px;
-      max-height: none;     /* ✅ let it grow */
-      overflow-y: visible;  /* ✅ no scroll until you want it */
-      border:1px solid var(--border);
-      border-radius: var(--radius);
-      background: rgba(0,0,0,.20);
-      backdrop-filter: blur(8px);
-      padding:14px;
-      box-shadow: var(--shadow);
-      font-size:14px;
-      line-height:1.45;
-    }
+.promptbar{
+  width: 100%;
+  margin-top: 12px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgb(252, 251, 251);
+  border-radius: 18px;
+  padding: 10px 12px;
+  box-shadow: 0 18px 45px rgba(0,0,0,.25);
+}
 
-    .msg-you{color: #ffffff;}
-    .msg-bot{color: rgba(233,233,243,.92);}
+textarea{
+  flex:1;
+  min-width:0;
+  height:44px;
+  border:none;
+  outline:none;
+  resize:none;
+  background:transparent;
+  color: black;
+  font-size:14px;
+  padding:10px 6px;
+}
 
-    .promptbar{
-      position: sticky;
-      bottom: 0;
-      margin-top: 12px;
+.send{
+  width:42px;
+  height:42px;
+  border:none;
+  border-radius:14px;
+  cursor:pointer;
+  color:rgb(15, 15, 15);
+  background: linear-gradient(90deg, #3dc2ff, #3dc2ff);
+  display:grid;
+  place-items:center;
+}
 
-      display: flex;
-      align-items: center;
-      gap: 10px;
 
-      border: 1px solid var(--border);
-      background: rgba(0,0,0,.40);  /* slightly stronger so it looks pinned */
-      border-radius: 18px;
-      padding: 10px 12px;
-      box-shadow: var(--shadow);
-    }
 
-    .mic{
-      width:34px; height:34px;
-      border-radius:12px;
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.05);
-      display:grid; place-items:center;
-      color: var(--muted);
-      user-select:none;
-    }
+  .sb-bottom{
+    margin-top:auto;       /* THIS pushes it to the bottom */
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    padding-top:10px;
+    border-top:1px solid var(--border);
+  }
 
-    textarea{
-      flex:1;
-      resize:none;
-      height:44px;
-      border:none;
-      outline:none;
-      background: transparent;
-      color: var(--text);
-      font-size:14px;
-      padding:10px 4px;
-    }
-    textarea::placeholder{color: rgba(233,233,243,.40)}
 
-    .send{
-      width:42px; height:42px;
-      border:none;
-      border-radius:14px;
-      cursor:pointer;
-      color:white;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      display:grid; place-items:center;
-      transition:.15s ease;
-    }
-    .send:hover{transform: translateY(-1px); filter:saturate(1.1)}
-    .send:disabled{opacity:.55; cursor:not-allowed; transform:none}
+ #messages{
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: rgb(255, 253, 253);
+  backdrop-filter: blur(8px);
+  padding: 14px;
+  box-shadow: var(--shadow);
 
-    /* Responsive */
-    @media (max-width: 980px){
-      .sidebar{display:none;}
-      .columns{grid-template-columns:1fr; }
-      #messages{height:260px;}
-      .hero h1{font-size:30px;}
-    }
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+/* each row */
+.msg{
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+}
+
+/* koko left, you right */
+.msg.user{ justify-content:flex-end; }
+.msg.koko{ justify-content:flex-start; }
+
+/* avatar */
+.avatar{
+  width:44px;
+  height:44px;
+  border-radius:15px;
+  object-fit:cover;
+  border:1px solid rgba(255,255,255,.14);
+  flex: 0 0 auto;
+  margin-top:2px;
+}
+
+/* the card bubble */
+.bubble{
+  max-width: 780px;
+  width: fit-content;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgb(253, 245, 245);
+  background: rgb(253, 245, 245);  /* dark card */
+  backdrop-filter: blur(8px);
+  color: rgba(0, 0, 0, 0.92);
+  box-shadow: 0 10px 28px rgba(0,0,0,.35);
+}
+
+/* user bubble slightly different */
+.msg.user .bubble{
+  background:rgb(253, 245, 245);
+}
+
+/* header line inside bubble */
+.meta{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  font-size:12px;
+  color: rgba(233,233,243,.55);
+  margin-bottom:6px;
+}
+.meta .name{
+  color: #12121b;          /* dark readable */
+  font-weight:600;
+}
+
+.meta .time{ opacity:.9; }
+
+/* message text */
+.text{
+  font-size:14px;
+  line-height:1.45;
+  white-space:pre-wrap;
+}
+
+/* remove old colors (your msg-you/msg-bot) */
+.msg-you, .msg-bot{ color: inherit; }
+
   </style>
 </head>
 
@@ -377,10 +446,10 @@
     <aside class="sidebar">
       <div class="sb-top">
         <div class="brand">
-          <img src="{{ url_for('static', filename='KOKO.jpg') }}" alt="Koko"/>
+          <img src="{{ url_for('static', filename='KOKO.PNG') }}" alt="Koko"/>
           <div class="name">
             <b>Koko AI 🐨</b>
-            <span>Enhanced</span>
+            <span>Your AI friend for HCP</span>
           </div>
         </div>
       </div>
@@ -392,9 +461,9 @@
 
       <div class="sb-section-title">Chats</div>
 
+      <div class="sb-chatlist" id="chatList"></div>
 
       <div class="sb-bottom">
-        <button class="pill ghost" onclick="scrollToPrompt()">Text Mode</button>
         <button class="pill ghost" onclick="clearMessages()">Clear</button>
         <button class="pill" onclick="alert('Hook this to your login/logout later')">Logout</button>
       </div>
@@ -403,14 +472,7 @@
     <!-- Main -->
     <main class="main">
       <section class="hero">
-        <h1>Koko 🐨</h1>
-
-        <div class="slider-wrap">
-          <div class="slider-labels">
-            <span>Logical</span><span>Balanced</span><span>Creative</span>
-          </div>
-          <input id="modeSlider" type="range" min="0" max="2" value="1" />
-        </div>
+        <h1 style="text-align:center;">Koko 🐨</h1>
       </section>
 
       <!-- Chat -->
@@ -418,82 +480,188 @@
         <div id="messages"></div>
 
         <div class="promptbar">
-          <div class="mic">🎙️</div>
           <textarea id="input" placeholder="Message Koko... (Enter to send, Shift+Enter for new line)"></textarea>
-          <button class="send" id="sendBtn" onclick="sendMessage()">➤</button>
+          <button class="send" id="sendBtn" type="button">➤</button>
 
 
-        <div class="koko-float">
-    <img src="{{ url_for('static', filename='KOKORESPONDING.png') }}" alt="Koko">
-  </div>
+
 
         </div>
       </section>
     </main>
+
+        <div class="koko-float">
+    <img src="{{ url_for('static', filename='Koala Thinking.png') }}" alt="Koko">
   </div>
 
-   
+  </div>
 
   <script>
-    function newChat(){
-      clearMessages();
-      document.getElementById("input").focus();
-    }
+  let chats = [];
+  let activeChatId = null;
+  let isSending = false;
 
-    function clearMessages(){
-      document.getElementById("messages").innerHTML = "";
-    }
+    function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
 
-    function scrollToPrompt(){
-      document.getElementById("promptArea").scrollIntoView({behavior:"smooth", block:"end"});
-      document.getElementById("input").focus();
-    }
 
-    function appendLine(who, text){
-      const messages = document.getElementById("messages");
-      const div = document.createElement("div");
-      div.className = who === "You" ? "msg-you" : "msg-bot";
-      div.innerHTML = "<b>" + who + ":</b> " + escapeHtml(text);
-      messages.appendChild(div);
-      messages.appendChild(document.createElement("br"));
-      messages.scrollTop = messages.scrollHeight;
-    }
+  function createChat(title = "New chat") {
+    const id = Date.now().toString();
+    chats.unshift({ id, title, messages: [] });
+    activeChatId = id;
+    renderChatList();
+    renderActiveChat();
+  }
 
-    function escapeHtml(str){
-      return str
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
+  function renderChatList() {
+    const list = document.getElementById("chatList");
+    if (!list) return;
+
+    list.innerHTML = chats.map(c => `
+      <div class="chat-item ${c.id === activeChatId ? "active" : ""}"
+           onclick="selectChat('${c.id}')">
+        ${escapeHtml(c.title)}
+      </div>
+    `).join("");
+  }
+
+  function selectChat(id) {
+    activeChatId = id;
+    renderChatList();
+    renderActiveChat();
+  }
+
+  function renderActiveChat() {
+    const messagesEl = document.getElementById("messages");
+    const chat = chats.find(c => c.id === activeChatId);
+    messagesEl.innerHTML = "";
+    if (!chat) return;
+
+    for (const m of chat.messages) {
+      appendLine(m.who, m.text);
     }
+  }
+
+  function newChat() {
+    createChat("Chat " + (chats.length + 1));
+    document.getElementById("input").focus();
+  }
+
+  function clearMessages() {
+    const chat = chats.find(c => c.id === activeChatId);
+    if (!chat) return;
+    chat.messages = [];
+    renderActiveChat();
+  }
+
+  function scrollToPrompt() {
+    document.getElementById("promptArea").scrollIntoView({ behavior: "smooth", block: "end" });
+    document.getElementById("input").focus();
+  }
+
+function appendLine(who, text) {
+  const messages = document.getElementById("messages");
+
+  const row = document.createElement("div");
+  row.className = (who === "You") ? "msg user" : "msg koko";
+
+  // Avatar only for Koko (you can also add yours if you want)
+  if (who !== "You") {
+    const av = document.createElement("img");
+    av.className = "avatar";
+    av.src = "{{ url_for('static', filename='KOKO.PNG') }}"; // or another koko icon
+    av.alt = "Koko";
+    row.appendChild(av);
+  }
+
+  const bubble = document.createElement("div");
+  bubble.className = "bubble";
+
+  const meta = document.createElement("div");
+  meta.className = "meta";
+  meta.innerHTML = `<span class="name">${who}</span><span class="time">Just now</span>`;
+
+  const body = document.createElement("div");
+  body.className = "text";
+  body.textContent = text;
+
+  bubble.appendChild(meta);
+  bubble.appendChild(body);
+  row.appendChild(bubble);
+
+  messages.appendChild(row);
+  messages.scrollTop = messages.scrollHeight;
+}
 
 async function sendMessage() {
+  if (isSending) return;
+
   const input = document.getElementById("input");
   const sendBtn = document.getElementById("sendBtn");
-  const messages = document.getElementById("messages");
+  const messagesEl = document.getElementById("messages");
 
   const userText = input.value.trim();
   if (!userText) return;
 
-  input.value = "";
-  sendBtn.disabled = true;
+  // ✅ get chat FIRST
+  let chat = chats.find(c => c.id === activeChatId);
+  if (!chat) {
 
+
+
+    createChat("New chat");
+    chat = chats.find(c => c.id === activeChatId);
+  }
+
+  isSending = true;
+  sendBtn.disabled = true;
+  input.value = "";
+
+  // ✅ show + save user msg
+  chat.messages.push({ who: "You", text: userText });
   appendLine("You", userText);
 
-  // create empty assistant line
-  const line = document.createElement("div");
-  line.className = "msg-bot";
-  line.innerHTML = "<b>Koko:</b> <span class='stream'></span>";
-  messages.appendChild(line);
-  messages.appendChild(document.createElement("br"));
+  // ✅ rename chat title from first message
+  if (chat.title === "New chat" || chat.title.startsWith("Chat ")) {
+    chat.title = userText.slice(0, 24);
+    renderChatList();
+  }
 
-  const span = line.querySelector(".stream");
+  // ✅ Koko streaming card
+  const row = document.createElement("div");
+  row.className = "msg koko";
+
+  const av = document.createElement("img");
+  av.className = "avatar";
+  av.src = "{{ url_for('static', filename='Koala Talking.PNG') }}";
+  av.alt = "Koko";
+  row.appendChild(av);
+
+  const bubble = document.createElement("div");
+  bubble.className = "bubble";
+  bubble.innerHTML = `
+    <div class="meta">
+      <span class="name">Koko</span>
+      <span class="time">Just now</span>
+    </div>
+    <div class="text"><span class="stream"></span></div>
+  `;
+  row.appendChild(bubble);
+  messagesEl.appendChild(row);
+
+  const span = bubble.querySelector(".stream");
+  let kokoFull = "";
 
   try {
     const response = await fetch("/chat_stream", {
       method: "POST",
-      headers: {"Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message: userText })
     });
 
@@ -514,30 +682,48 @@ async function sendMessage() {
         const payload = JSON.parse(part.slice(6));
 
         if (payload.delta) {
+          kokoFull += payload.delta;
           span.textContent += payload.delta;
-          messages.scrollTop = messages.scrollHeight;
+          messagesEl.scrollTop = messagesEl.scrollHeight;
         }
       }
     }
+
+    chat.messages.push({ who: "Koko", text: kokoFull || "(no response)" });
+
   } catch (err) {
+    console.error(err);
     span.textContent = "Error: stream failed.";
+    chat.messages.push({ who: "Koko", text: "Error: stream failed." });
+
   } finally {
+    isSending = false;
     sendBtn.disabled = false;
     input.focus();
   }
 }
 
-    
 
-    // Enter to send (Shift+Enter newline)
-    const inputEl = document.getElementById("input");
-    inputEl.addEventListener("keydown", function (e) {
-      if (e.key === "Enter" && !e.shiftKey) {
-        e.preventDefault();
-        sendMessage();
-      }
-      
-    });
-  </script>
+  // Enter to send (Shift+Enter newline)
+const inputEl = document.getElementById("input");
+
+if (!window.__kokoKeyListenerAdded) {
+  window.__kokoKeyListenerAdded = true;
+
+  inputEl.addEventListener("keydown", function (e) {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+
+  document.getElementById("sendBtn").addEventListener("click", sendMessage);
+}
+
+  // ✅ THIS MUST BE OUTSIDE ANY OTHER LISTENER
+  window.addEventListener("load", () => {
+    if (!activeChatId) createChat("New chat");
+  });
+</script>
 </body>
 </html>

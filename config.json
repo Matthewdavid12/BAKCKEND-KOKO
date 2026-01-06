@@ -1,0 +1,7 @@
+{
+  "PG_HOST": "power-bi-demo-db.postgres.database.azure.com",
+  "PG_PORT": 5432,
+  "PG_DBNAME": "postgres",
+  "PG_USER": "dev",
+  "PG_PASSWORD": "Hcpfinancialpulaski3949"
+}
