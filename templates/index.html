@@ -575,7 +575,7 @@ function appendLine(who, text) {
   if (who !== "You") {
     const av = document.createElement("img");
     av.className = "avatar";
-    av.src = "{{ url_for('static', filename='KOKO.PNG') }}"; // or another koko icon
+    av.src = "{{ url_for('static', filename='KOKO.png') }}"; // or another koko icon
     av.alt = "Koko";
     row.appendChild(av);
   }
@@ -639,7 +639,7 @@ async function sendMessage() {
 
   const av = document.createElement("img");
   av.className = "avatar";
-  av.src = "{{ url_for('static', filename='Koala Talking.PNG') }}";
+  av.src = "{{ url_for('static', filename='Koala_Talking.png') }}";
   av.alt = "Koko";
   row.appendChild(av);
 
