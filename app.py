@@ -10,10 +10,31 @@ import importlib
 from datetime import date, datetime
 from decimal import Decimal
 from uuid import UUID
-
+from google.oauth2.service_account import Credentials
+import gspread
 import psycopg2
 from psycopg2.extras import RealDictCursor
 from werkzeug.utils import secure_filename
+
+
+
+GMAIL_SCOPES = ["https://www.googleapis.com/auth/gmail.compose"]
+MECHANIC_EMAIL = "supervisor@example.com"
+SUPERVISOR_EMAIL = "andrew.basa@hcpcaregivers.com" 
+MY_EMAIL         = "mdavidrobles12@gmail.com"        
+
+
+# ------------------------------
+# GOOGLE SHEETS SETUP
+# ------------------------------
+# 👉 Put your real Google Sheet URL here (the one with Vehicle / Mileage columns)
+SHEET_URL = "https://docs.google.com/spreadsheets/d/136xEmaUtoN72r5pxo4gAE3neB-1l4kMs9EK9H1eQO90/edit?gid=0#gid=0"
+
+SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
+creds = Credentials.from_service_account_file("credentials.json", scopes=SCOPES)
+client = gspread.authorize(creds)
+sheet = client.open_by_url(SHEET_URL).sheet1
+
 
 
 # -----------------------------
