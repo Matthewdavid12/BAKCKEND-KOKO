@@ -133,6 +133,57 @@
       overflow:auto;
       padding-right:4px;
     }
+
+    .sb-search{
+      width:100%;
+      border:1px solid var(--border);
+      border-radius:10px;
+      padding:8px 10px;
+      background: rgba(255,255,255,.2);
+      color:var(--text);
+      outline:none;
+      font-size:12px;
+    }
+
+    .tag-filters{
+      display:flex;
+      gap:6px;
+      flex-wrap:wrap;
+      padding:6px 4px;
+    }
+
+    .tag-filter{
+      border:1px solid var(--border);
+      background: rgba(0, 0, 0, 0.04);
+      color:var(--text);
+      border-radius:999px;
+      padding:4px 8px;
+      font-size:11px;
+      cursor:pointer;
+    }
+
+    .tag-filter.active{
+      background: rgba(99,102,241,.18);
+      border-color: rgba(99,102,241,.4);
+    }
+
+    .chat-tags{
+      display:flex;
+      gap:6px;
+      flex-wrap:wrap;
+      margin-top:6px;
+    }
+
+    .chat-tag{
+      font-size:10px;
+      padding:2px 6px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.2);
+    }
+
+
+
     .chat-item{
       padding:10px 12px;
       border-radius:12px;
@@ -182,7 +233,7 @@
     flex-direction:column;
     align-items:stretch;
     justify-content:flex-start;
-    padding:26px 22px 18px;
+    padding:16px 22px 18px;
     gap:18px;
     overflow:hidden;  /* ✅ stop whole page scrolling */
     min-height:0;     /* ✅ needed for inner scrolling */
@@ -190,17 +241,18 @@
 
     .hero{
       width: 100%;
-      max-width: 900px;   /* match your chat-shell max-width */
-      margin: 10px auto 0; /* ✅ centers the whole hero block */
+      max-width: 100%;
+      margin: 0;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      gap: 10px;
+      align-items: flex-start;
+      gap: 6px;
     }
 
     .hero h1{
       width: 100%;
-      text-align: center;
+      text-align: left;
+      margin: 0;
     }
 
     .hero-sub{
@@ -307,7 +359,7 @@
 
 .promptbar{
   width: 100%;
-  margin-top: 12px;
+  margin-top: 8px;
   display:flex;
   align-items:center;
   gap:10px;
@@ -317,6 +369,41 @@
   padding: 10px 12px;
   box-shadow: 0 18px 45px rgba(0,0,0,.25);
 }
+
+.actions-bar{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:8px;
+}
+
+.action-btn{
+  border:1px solid var(--border);
+  background: rgba(0, 0, 0, 0.04);
+  color:var(--text);
+  border-radius:12px;
+  padding:6px 10px;
+  font-size:12px;
+  cursor:pointer;
+}
+
+.suggestions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:10px;
+}
+
+.suggestion-btn{
+  border:1px dashed rgba(0,0,0,.15);
+  background: rgba(255,255,255,.6);
+  color:var(--text);
+  border-radius:12px;
+  padding:6px 10px;
+  font-size:12px;
+  cursor:pointer;
+}
+
 
 textarea{
   flex:1;
@@ -343,6 +430,17 @@ textarea{
   place-items:center;
 }
 
+.attach{
+  width:42px;
+  height:42px;
+  border:none;
+  border-radius:14px;
+  cursor:pointer;
+  color:rgb(15, 15, 15);
+  background: rgba(0, 0, 0, 0.05);
+  display:grid;
+  place-items:center;
+}
 
 
   .sb-bottom{
@@ -359,12 +457,13 @@ textarea{
   flex: 1;
   min-height: 0;
   overflow-y: auto;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: rgb(255, 253, 253);
-  backdrop-filter: blur(8px);
-  padding: 14px;
-  box-shadow: var(--shadow);
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  backdrop-filter: none;
+  padding: 0;
+  box-shadow: none;
+
 
   display:flex;
   flex-direction:column;
@@ -405,6 +504,44 @@ textarea{
   color: rgba(0, 0, 0, 0.92);
   box-shadow: 0 10px 28px rgba(0,0,0,.35);
 }
+
+.msg-actions{
+  display:flex;
+  gap:6px;
+  margin-top:8px;
+}
+
+.msg-action{
+  border:1px solid var(--border);
+  background: rgba(0,0,0,.03);
+  color:var(--text);
+  border-radius:10px;
+  padding:4px 8px;
+  font-size:11px;
+  cursor:pointer;
+}
+
+.num-highlight{
+  background: rgba(255, 230, 150, 0.55);
+  padding:0 4px;
+  border-radius:6px;
+  font-weight:600;
+}
+
+.meta .trend{
+  margin-left:auto;
+  font-size:12px;
+}
+
+.details-toggle{
+  border:none;
+  background: transparent;
+  color: #4f46e5;
+  cursor:pointer;
+  font-size:12px;
+  margin-top:6px;
+}
+
 
 /* user bubble slightly different */
 .msg.user .bubble{
@@ -459,9 +596,25 @@ textarea{
         <span style="color:var(--muted2)">Ctrl+K</span>
       </button>
 
+      <input class="sb-search" id="chatSearch" placeholder="Search chats..." />
+
+      <div class="tag-filters" id="tagFilters">
+        <button class="tag-filter active" data-tag="all">All</button>
+        <button class="tag-filter" data-tag="rating">Rating</button>
+        <button class="tag-filter" data-tag="mileage">Mileage</button>
+        <button class="tag-filter" data-tag="finance">Finance</button>
+      </div>
+
+
       <div class="sb-section-title">Chats</div>
 
       <div class="sb-chatlist" id="chatList"></div>
+
+            <div class="sb-section-title">Pinned</div>
+      <div class="sb-chatlist" id="pinnedList"></div>
+
+      <div class="sb-section-title">Bookmarks</div>
+      <div class="sb-chatlist" id="bookmarkList"></div>
 
       <div class="sb-bottom">
         <button class="pill ghost" onclick="clearMessages()">Clear</button>
@@ -472,7 +625,7 @@ textarea{
     <!-- Main -->
     <main class="main">
       <section class="hero">
-        <h1 style="text-align:center;">Koko 🐨</h1>
+        <h1>Koko 🐨</h1>
       </section>
 
       <!-- Chat -->
@@ -480,6 +633,8 @@ textarea{
         <div id="messages"></div>
 
         <div class="promptbar">
+          <input id="docUpload" type="file" accept=".txt,.md,.csv,.pdf" hidden />
+          <button class="attach" id="uploadBtn" type="button" title="Upload a document">📎</button>
           <textarea id="input" placeholder="Message Koko... (Enter to send, Shift+Enter for new line)"></textarea>
           <button class="send" id="sendBtn" type="button">➤</button>
 
@@ -487,6 +642,16 @@ textarea{
 
 
         </div>
+
+          <div class="actions-bar" id="quickActions">
+          <button class="action-btn" data-action="Summarize in 3 bullets.">Summarize</button>
+          <button class="action-btn" data-action="Highlight the key numbers and what they mean.">Key numbers</button>
+          <button class="action-btn" data-action="Give me the next steps.">Next steps</button>
+          <button class="action-btn" data-action="List risks or blockers to watch.">Risks</button>
+        </div>
+        <div class="suggestions" id="suggestions"></div>
+
+
       </section>
     </main>
 
@@ -500,6 +665,9 @@ textarea{
   let chats = [];
   let activeChatId = null;
   let isSending = false;
+  let pinnedItems = [];
+  let bookmarkedItems = [];
+  let activeTagFilter = "all";
 
     function escapeHtml(str) {
     return String(str)
@@ -513,7 +681,7 @@ textarea{
 
   function createChat(title = "New chat") {
     const id = Date.now().toString();
-    chats.unshift({ id, title, messages: [] });
+    chats.unshift({ id, title, messages: [], tags: [] });
     activeChatId = id;
     renderChatList();
     renderActiveChat();
@@ -523,13 +691,30 @@ textarea{
     const list = document.getElementById("chatList");
     if (!list) return;
 
-    list.innerHTML = chats.map(c => `
+    const searchValue = (document.getElementById("chatSearch")?.value || "").toLowerCase();
+    const filtered = chats.filter(c => {
+      const matchesSearch = !searchValue || c.title.toLowerCase().includes(searchValue);
+      const matchesTag = activeTagFilter === "all" || (c.tags || []).includes(activeTagFilter);
+      return matchesSearch && matchesTag;
+    });
+
+    list.innerHTML = filtered.map(c => `
       <div class="chat-item ${c.id === activeChatId ? "active" : ""}"
            onclick="selectChat('${c.id}')">
         ${escapeHtml(c.title)}
       </div>
     `).join("");
   }
+
+    function renderChatTags(tags = []) {
+    if (!tags.length) return "";
+    return `
+      <div class="chat-tags">
+        ${tags.map(tag => `<span class="chat-tag">${tag}</span>`).join("")}
+      </div>
+    `;
+  }
+
 
   function selectChat(id) {
     activeChatId = id;
@@ -567,9 +752,12 @@ textarea{
 
 function appendLine(who, text) {
   const messages = document.getElementById("messages");
+  const messageId = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+
 
   const row = document.createElement("div");
   row.className = (who === "You") ? "msg user" : "msg koko";
+  row.dataset.messageId = messageId;
 
   // Avatar only for Koko (you can also add yours if you want)
   if (who !== "You") {
@@ -589,15 +777,183 @@ function appendLine(who, text) {
 
   const body = document.createElement("div");
   body.className = "text";
-  body.textContent = text;
+    if (who === "You") {
+    body.textContent = text;
+  } else {
+    body.innerHTML = formatAssistantText(text);
+  }
 
   bubble.appendChild(meta);
   bubble.appendChild(body);
+
+    if (who !== "You") {
+    const trendEmoji = getTrendEmoji(text);
+    if (trendEmoji) {
+      const trend = document.createElement("span");
+      trend.className = "trend";
+      trend.textContent = trendEmoji;
+      meta.appendChild(trend);
+    }
+
+    const toggle = document.createElement("button");
+    toggle.className = "details-toggle";
+    toggle.dataset.fullText = text;
+    toggle.dataset.collapsed = "true";
+    toggle.addEventListener("click", () => {
+      const collapsed = toggle.dataset.collapsed === "true";
+      setDetailsState(toggle, body, !collapsed);
+    });
+    bubble.appendChild(toggle);
+    setDetailsState(toggle, body, true);
+
+    const actions = document.createElement("div");
+    actions.className = "msg-actions";
+    actions.innerHTML = `
+      <button class="msg-action" data-action="pin">📌 Pin</button>
+      <button class="msg-action" data-action="bookmark">⭐ Bookmark</button>
+      <button class="msg-action" data-action="copy">Copy</button>
+    `;
+    actions.addEventListener("click", (e) => handleMessageAction(e, messageId, text));
+    bubble.appendChild(actions);
+  }
+
   row.appendChild(bubble);
 
   messages.appendChild(row);
   messages.scrollTop = messages.scrollHeight;
 }
+function formatAssistantText(text) {
+  const safe = escapeHtml(text);
+  return safe.replace(/(\b\d[\d,\.%]*\b)/g, '<span class="num-highlight">$1</span>');
+}
+
+function setDetailsState(button, body, collapsed) {
+  const fullText = button.dataset.fullText || "";
+  if (fullText.length <= 280) {
+    button.style.display = "none";
+    body.innerHTML = formatAssistantText(fullText);
+    return;
+  }
+  if (collapsed) {
+    const preview = fullText.slice(0, 280) + "...";
+    body.innerHTML = formatAssistantText(preview);
+    button.textContent = "Show more";
+    button.dataset.collapsed = "true";
+  } else {
+    body.innerHTML = formatAssistantText(fullText);
+    button.textContent = "Show less";
+    button.dataset.collapsed = "false";
+  }
+}
+
+function getTrendEmoji(text) {
+  const lower = text.toLowerCase();
+  if (/(warning|risk|error|issue|alert)/.test(lower)) return "⚠️";
+  if (/(increase|up|growth|rise|improve)/.test(lower)) return "📈";
+  if (/(decrease|down|drop|decline|reduce)/.test(lower)) return "📉";
+  return "";
+}
+
+function handleMessageAction(event, messageId, text) {
+  const action = event.target?.dataset?.action;
+  if (!action) return;
+  if (action === "pin") {
+    pinnedItems.unshift({ id: messageId, text });
+    renderPinnedList();
+  }
+  if (action === "bookmark") {
+    bookmarkedItems.unshift({ id: messageId, text });
+    renderBookmarkList();
+  }
+  if (action === "copy") {
+    navigator.clipboard.writeText(text);
+  }
+}
+
+function renderPinnedList() {
+  const list = document.getElementById("pinnedList");
+  if (!list) return;
+  list.innerHTML = pinnedItems.map(item => `
+    <div class="chat-item" onclick="scrollToMessage('${item.id}')">
+      ${escapeHtml(item.text.slice(0, 60))}${item.text.length > 60 ? "..." : ""}
+    </div>
+  `).join("");
+}
+
+function renderBookmarkList() {
+  const list = document.getElementById("bookmarkList");
+  if (!list) return;
+  list.innerHTML = bookmarkedItems.map(item => `
+    <div class="chat-item" onclick="scrollToMessage('${item.id}')">
+      ${escapeHtml(item.text.slice(0, 60))}${item.text.length > 60 ? "..." : ""}
+    </div>
+  `).join("");
+}
+
+function scrollToMessage(messageId) {
+  const el = document.querySelector(`[data-message-id="${messageId}"]`);
+  if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+function enhanceStreamingMessage(row, bubble, text, messageId) {
+  const meta = bubble.querySelector(".meta");
+  const trendEmoji = getTrendEmoji(text);
+  if (trendEmoji && meta) {
+    const trend = document.createElement("span");
+    trend.className = "trend";
+    trend.textContent = trendEmoji;
+    meta.appendChild(trend);
+  }
+
+  const body = bubble.querySelector(".text");
+  const toggle = document.createElement("button");
+  toggle.className = "details-toggle";
+  toggle.dataset.fullText = text;
+  toggle.dataset.collapsed = "true";
+  toggle.addEventListener("click", () => {
+    const collapsed = toggle.dataset.collapsed === "true";
+    setDetailsState(toggle, body, !collapsed);
+  });
+  bubble.appendChild(toggle);
+  setDetailsState(toggle, body, true);
+
+  const actions = document.createElement("div");
+  actions.className = "msg-actions";
+  actions.innerHTML = `
+    <button class="msg-action" data-action="pin">📌 Pin</button>
+    <button class="msg-action" data-action="bookmark">⭐ Bookmark</button>
+    <button class="msg-action" data-action="copy">Copy</button>
+  `;
+  actions.addEventListener("click", (e) => handleMessageAction(e, messageId, text));
+  bubble.appendChild(actions);
+}
+
+function updateChatTags(chat, text) {
+  const lower = text.toLowerCase();
+  const tags = new Set(chat.tags || []);
+  if (/(rating|score|review)/.test(lower)) tags.add("rating");
+  if (/(mileage|miles|odometer)/.test(lower)) tags.add("mileage");
+  if (/(finance|payment|invoice|budget|cost|price)/.test(lower)) tags.add("finance");
+  chat.tags = Array.from(tags);
+  renderChatList();
+}
+
+function updateSuggestions(text) {
+  const suggestions = document.getElementById("suggestions");
+  if (!suggestions) return;
+  const base = [
+    "Summarize the key takeaways.",
+    "What should I do next?",
+    "Call out any risks or warnings."
+  ];
+  if (/\d/.test(text)) {
+    base.unshift("Explain the numbers in simple terms.");
+  }
+  suggestions.innerHTML = base.map(s => `
+    <button class="suggestion-btn" data-suggestion="${escapeHtml(s)}">${escapeHtml(s)}</button>
+  `).join("");
+}
+
 
 async function sendMessage() {
   if (isSending) return;
@@ -605,6 +961,7 @@ async function sendMessage() {
   const input = document.getElementById("input");
   const sendBtn = document.getElementById("sendBtn");
   const messagesEl = document.getElementById("messages");
+    const toneMode = document.getElementById("toneMode");
 
   const userText = input.value.trim();
   if (!userText) return;
@@ -626,6 +983,7 @@ async function sendMessage() {
   // ✅ show + save user msg
   chat.messages.push({ who: "You", text: userText });
   appendLine("You", userText);
+  updateChatTags(chat, userText);
 
   // ✅ rename chat title from first message
   if (chat.title === "New chat" || chat.title.startsWith("Chat ")) {
@@ -662,7 +1020,10 @@ async function sendMessage() {
     const response = await fetch("/chat_stream", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: userText })
+      body: JSON.stringify({
+        message: userText,
+        tone: toneMode ? toneMode.value : null
+      })
     });
 
     const reader = response.body.getReader();
@@ -690,6 +1051,15 @@ async function sendMessage() {
     }
 
     chat.messages.push({ who: "Koko", text: kokoFull || "(no response)" });
+    const finalText = kokoFull || "(no response)";
+    const messageId = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+    row.dataset.messageId = messageId;
+    span.innerHTML = formatAssistantText(finalText);
+    enhanceStreamingMessage(row, bubble, finalText, messageId);
+
+    chat.messages.push({ who: "Koko", text: finalText });
+    updateChatTags(chat, finalText);
+    updateSuggestions(finalText);
 
   } catch (err) {
     console.error(err);
@@ -703,6 +1073,33 @@ async function sendMessage() {
   }
 }
 
+
+async function uploadDocument(file) {
+  if (!file) return;
+
+  const formData = new FormData();
+  formData.append("file", file);
+
+  appendLine("You", `Uploaded document: ${file.name}`);
+
+  try {
+    const response = await fetch("/upload_doc", {
+      method: "POST",
+      body: formData
+    });
+
+    const payload = await response.json();
+    if (!response.ok) {
+      appendLine("Koko", payload.error || "Upload failed.");
+      return;
+    }
+
+    appendLine("Koko", payload.message || "Document uploaded.");
+  } catch (err) {
+    console.error(err);
+    appendLine("Koko", "Upload failed. Please try again.");
+  }
+}
 
   // Enter to send (Shift+Enter newline)
 const inputEl = document.getElementById("input");
@@ -718,6 +1115,43 @@ if (!window.__kokoKeyListenerAdded) {
   });
 
   document.getElementById("sendBtn").addEventListener("click", sendMessage);
+  
+  const uploadBtn = document.getElementById("uploadBtn");
+  const uploadInput = document.getElementById("docUpload");
+  uploadBtn.addEventListener("click", () => uploadInput.click());
+  uploadInput.addEventListener("change", (e) => {
+    const file = e.target.files && e.target.files[0];
+    uploadInput.value = "";
+    uploadDocument(file);
+  });
+
+  document.getElementById("quickActions").addEventListener("click", (e) => {
+    const action = e.target?.dataset?.action;
+    if (!action) return;
+    document.getElementById("input").value = action;
+    sendMessage();
+  });
+
+  document.getElementById("suggestions").addEventListener("click", (e) => {
+    const suggestion = e.target?.dataset?.suggestion;
+    if (!suggestion) return;
+    document.getElementById("input").value = suggestion;
+    sendMessage();
+  });
+
+  const chatSearch = document.getElementById("chatSearch");
+  chatSearch.addEventListener("input", () => renderChatList());
+
+  document.getElementById("tagFilters").addEventListener("click", (e) => {
+    const tag = e.target?.dataset?.tag;
+    if (!tag) return;
+    activeTagFilter = tag;
+    document.querySelectorAll(".tag-filter").forEach(btn => {
+      btn.classList.toggle("active", btn.dataset.tag === tag);
+    });
+    renderChatList();
+  });
+
 }
 
   // ✅ THIS MUST BE OUTSIDE ANY OTHER LISTENER

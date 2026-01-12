@@ -5,12 +5,15 @@ import os
 import time
 import json
 import re
+import io
+import importlib
 from datetime import date, datetime
 from decimal import Decimal
 from uuid import UUID
 
 import psycopg2
 from psycopg2.extras import RealDictCursor
+from werkzeug.utils import secure_filename
 
 
 # -----------------------------
@@ -111,8 +114,11 @@ def rewrite_sql(user_text: str, sql: str) -> str:
     return q
 
 SHOW_SQL_PROOF = False
-
-
+STREAM_INITIAL_DELAY_SECONDS = 0.4
+STREAM_CHUNK_SIZE = 40
+STREAM_CHUNK_DELAY_SECONDS = 0.06
+MAX_DOC_CHARS = 12000
+ALLOWED_DOC_EXTENSIONS = {".txt", ".md", ".csv", ".pdf"}
 
 
 DB_CONFIG = {
@@ -158,6 +164,37 @@ def json_safe(x):
         return [json_safe(v) for v in x]
 
     return x
+
+def _is_allowed_doc(filename: str) -> bool:
+    _, ext = os.path.splitext(filename.lower())
+    return ext in ALLOWED_DOC_EXTENSIONS
+
+
+def _extract_text_from_upload(file_storage) -> str:
+    filename = file_storage.filename or ""
+    _, ext = os.path.splitext(filename.lower())
+
+    if ext in {".txt", ".md", ".csv"}:
+        return file_storage.read().decode("utf-8", errors="replace")
+
+    if ext == ".pdf":
+        try:
+            import PyPDF2
+        except ImportError as exc:
+            raise ValueError(
+                "PDF support requires PyPDF2. Install it with: pip install PyPDF2"
+            ) from exc
+
+        data = io.BytesIO(file_storage.read())
+        reader = PyPDF2.PdfReader(data)
+        pages = []
+        for page in reader.pages:
+            pages.append(page.extract_text() or "")
+        return "\n".join(pages)
+
+    raise ValueError("Unsupported file type.")
+
+
 
 
 # -----------------------------
@@ -265,7 +302,7 @@ client = OpenAI()
 
 SYSTEM_PROMPT = """
 Your name is Koko.
-You are a Koala that work for Healthcare plus
+You are a Koala that work for Healthcare plus cd 
 You are a helpful, intelligent assistant.
 If a question requires up-to-date information (news, weather, prices, current events, everything),
 use web search and include sources/citations in the answer.
@@ -275,15 +312,20 @@ Style:
 - Sound natural, friendly, and conversational (like ChatGPT), not robotic.
 - Don’t dump huge answers. Start with the most helpful 3–6 lines.
 - Use short paragraphs and bullets when useful.
+- Add a little creativity and warmth (light personality, varied phrasing, smooth transitions).
+- Avoid abrupt, throwaway responses; make replies feel complete and thoughtful.
+- Add a little creativity and warmth (light personality, varied phrasing, smooth transitions).
+- Avoid abrupt, throwaway responses; make replies feel complete and thoughtful.
 - Ask ONE quick follow-up question only if needed to answer correctly.
 - If the user says “go do research” or asks for current info, use web_search and cite sources.
 - If the user is frustrated, stay calm and helpful.
+- Pause briefly to think before answering; reply at a calm, human pace.
 
 Behavior:
 - Prefer actionable steps over long explanations.
 - For coding help: show the exact snippet and where to paste it.
 - For debugging: explain the likely cause, then give a fix.
-- talk like if we are friends.
+- Talk like if we are friends.
 - You do NOT know company data by memory.
 - If the user asks about branches, clients, caregivers, stats, counts, or anything company-related,
   you MUST call query_sql before answering.
@@ -342,9 +384,54 @@ def test_db():
     return jsonify(rows)
 
 
+@app.route("/upload_doc", methods=["POST"])
+def upload_doc():
+    file = request.files.get("file")
+    if not file or not file.filename:
+        return jsonify({"error": "No file uploaded."}), 400
+
+    filename = secure_filename(file.filename)
+    if not _is_allowed_doc(filename):
+        return jsonify({"error": "Unsupported file type. Use .txt, .md, .csv, or .pdf."}), 400
+
+    try:
+        content = _extract_text_from_upload(file)
+    except Exception as exc:
+        return jsonify({"error": f"Failed to read file: {exc}"}), 400
+
+    content = content.strip()
+    if not content:
+        return jsonify({"error": "File appears to be empty."}), 400
+
+    truncated = content[:MAX_DOC_CHARS]
+    if len(content) > MAX_DOC_CHARS:
+        truncated += "\n\n[Document truncated]"
+
+    conversation_history.append({
+        "role": "user",
+        "content": f"Document uploaded: {filename}\n\n{truncated}"
+    })
+    if len(conversation_history) > (1 + MAX_HISTORY_MESSAGES):
+        conversation_history[:] = [conversation_history[0]] + conversation_history[-MAX_HISTORY_MESSAGES:]
+
+    return jsonify({
+        "message": "Document uploaded. Ask me anything about it!",
+        "filename": filename,
+        "chars": len(truncated)
+    })
+
+
+
 @app.route("/chat_stream", methods=["POST"])
 def chat_stream():
     user_message = request.json.get("message", "")
+    tone_mode = request.json.get("tone")
+
+    if tone_mode:
+        conversation_history.append({
+            "role": "system",
+            "content": f"Tone preference: {tone_mode}. Keep responses aligned to this tone."
+        })
 
     # Save user message to history
     conversation_history.append({"role": "user", "content": user_message})
@@ -437,7 +524,7 @@ def chat_stream():
                     }]
                 
                 resp2 = client.responses.create(
-                    model="gpt-4.1",
+                    model="gpt-5.1",
                     input=current_input,
                     tool_choice="none",
                     max_output_tokens=500
@@ -456,14 +543,15 @@ def chat_stream():
                 final_text += "\n\nSQL result preview (first 5 rows):\n" + json.dumps(preview, indent=2)
 
             
-           # Stream final answer
-            chunk_size = 60
+            # Stream final answer
+            time.sleep(STREAM_INITIAL_DELAY_SECONDS)
+            chunk_size = STREAM_CHUNK_SIZE
             full = ""
             for i in range(0, len(final_text), chunk_size):
                 chunk = final_text[i:i + chunk_size]
                 full += chunk
                 yield f"data: {json.dumps({'delta': chunk})}\n\n"
-                time.sleep(0.01)
+                time.sleep(STREAM_CHUNK_DELAY_SECONDS)
 
             if full.strip():
                 conversation_history.append({"role": "assistant", "content": full})
