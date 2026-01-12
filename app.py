@@ -5,36 +5,14 @@ import os
 import time
 import json
 import re
-import io
-import importlib
 from datetime import date, datetime
 from decimal import Decimal
 from uuid import UUID
-from google.oauth2.service_account import Credentials
-import gspread
+from urllib.parse import urlparse, parse_qs
+from urllib.request import urlopen
 import psycopg2
 from psycopg2.extras import RealDictCursor
 from werkzeug.utils import secure_filename
-
-
-
-GMAIL_SCOPES = ["https://www.googleapis.com/auth/gmail.compose"]
-MECHANIC_EMAIL = "supervisor@example.com"
-SUPERVISOR_EMAIL = "andrew.basa@hcpcaregivers.com" 
-MY_EMAIL         = "mdavidrobles12@gmail.com"        
-
-
-# ------------------------------
-# GOOGLE SHEETS SETUP
-# ------------------------------
-# 👉 Put your real Google Sheet URL here (the one with Vehicle / Mileage columns)
-SHEET_URL = "https://docs.google.com/spreadsheets/d/136xEmaUtoN72r5pxo4gAE3neB-1l4kMs9EK9H1eQO90/edit?gid=0#gid=0"
-
-SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
-creds = Credentials.from_service_account_file("credentials.json", scopes=SCOPES)
-client = gspread.authorize(creds)
-sheet = client.open_by_url(SHEET_URL).sheet1
-
 
 
 # -----------------------------
@@ -139,6 +117,7 @@ STREAM_INITIAL_DELAY_SECONDS = 0.4
 STREAM_CHUNK_SIZE = 40
 STREAM_CHUNK_DELAY_SECONDS = 0.06
 MAX_DOC_CHARS = 12000
+MAX_SHEET_CHARS = 12000
 ALLOWED_DOC_EXTENSIONS = {".txt", ".md", ".csv", ".pdf"}
 
 
@@ -198,22 +177,33 @@ def _extract_text_from_upload(file_storage) -> str:
     if ext in {".txt", ".md", ".csv"}:
         return file_storage.read().decode("utf-8", errors="replace")
 
-    if ext == ".pdf":
-        try:
-            import PyPDF2
-        except ImportError as exc:
-            raise ValueError(
-                "PDF support requires PyPDF2. Install it with: pip install PyPDF2"
-            ) from exc
-
-        data = io.BytesIO(file_storage.read())
-        reader = PyPDF2.PdfReader(data)
-        pages = []
-        for page in reader.pages:
-            pages.append(page.extract_text() or "")
-        return "\n".join(pages)
-
     raise ValueError("Unsupported file type.")
+
+
+def _normalize_sheet_export_url(sheet_url: str) -> str:
+    parsed = urlparse(sheet_url)
+    if "docs.google.com" not in parsed.netloc:
+        raise ValueError("Only Google Sheets URLs are supported.")
+
+    match = re.search(r"/spreadsheets/d/([a-zA-Z0-9-_]+)", parsed.path)
+    if not match:
+        raise ValueError("Invalid Google Sheets URL.")
+
+    sheet_id = match.group(1)
+    query = parse_qs(parsed.query)
+    gid = query.get("gid", [None])[0]
+
+    export_url = f"https://docs.google.com/spreadsheets/d/136xEmaUtoN72r5pxo4gAE3neB-1l4kMs9EK9H1eQO90/edit?gid=0#gid=0"
+    if gid:
+        export_url += f"&gid={gid}"
+    return export_url
+
+
+def fetch_sheet_csv(sheet_url: str) -> str:
+    export_url = _normalize_sheet_export_url(sheet_url)
+    with urlopen(export_url, timeout=15) as response:
+        data = response.read()
+    return data.decode("utf-8", errors="replace")
 
 
 
@@ -441,7 +431,37 @@ def upload_doc():
         "chars": len(truncated)
     })
 
+@app.route("/load_sheet", methods=["POST"])
+def load_sheet():
+    payload = request.json or {}
+    sheet_url = (payload.get("url") or "").strip()
+    if not sheet_url:
+        return jsonify({"error": "No Google Sheets URL provided."}), 400
 
+    try:
+        content = fetch_sheet_csv(sheet_url)
+    except Exception as exc:
+        return jsonify({"error": f"Failed to read Google Sheet: {exc}"}), 400
+
+    content = content.strip()
+    if not content:
+        return jsonify({"error": "Google Sheet appears to be empty."}), 400
+
+    truncated = content[:MAX_SHEET_CHARS]
+    if len(content) > MAX_SHEET_CHARS:
+        truncated += "\n\n[Sheet truncated]"
+
+    conversation_history.append({
+        "role": "user",
+        "content": f"Google Sheet loaded:\n\n{truncated}"
+    })
+    if len(conversation_history) > (1 + MAX_HISTORY_MESSAGES):
+        conversation_history[:] = [conversation_history[0]] + conversation_history[-MAX_HISTORY_MESSAGES:]
+
+    return jsonify({
+        "message": "Google Sheet loaded. Ask me anything about it!",
+        "chars": len(truncated)
+    })
 
 @app.route("/chat_stream", methods=["POST"])
 def chat_stream():
