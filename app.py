@@ -6,6 +6,7 @@ import time
 import json
 import re
 from datetime import date, datetime
+from typing import List, Dict
 from decimal import Decimal
 from uuid import UUID
 from urllib.parse import urlparse, parse_qs
@@ -13,7 +14,7 @@ from urllib.request import urlopen
 import psycopg2
 from psycopg2.extras import RealDictCursor
 from werkzeug.utils import secure_filename
-
+from PyPDF2 import PdfReader
 
 # -----------------------------
 # Config
@@ -119,6 +120,7 @@ STREAM_CHUNK_DELAY_SECONDS = 0.06
 MAX_DOC_CHARS = 12000
 MAX_SHEET_CHARS = 12000
 ALLOWED_DOC_EXTENSIONS = {".txt", ".md", ".csv", ".pdf"}
+MEMORY_STORE_PATH = "koko_memories.json"
 
 
 DB_CONFIG = {
@@ -155,6 +157,7 @@ def json_safe(x):
     if isinstance(x, (bytes, bytearray, memoryview)):
         return x.decode("utf-8", errors="replace")
 
+
     # dict
     if isinstance(x, dict):
         return {k: json_safe(v) for k, v in x.items()}
@@ -176,8 +179,58 @@ def _extract_text_from_upload(file_storage) -> str:
 
     if ext in {".txt", ".md", ".csv"}:
         return file_storage.read().decode("utf-8", errors="replace")
+    
+    if ext == ".pdf":
+        reader = PdfReader(file_storage.stream)
+        pages = []
+        for page in reader.pages:
+            pages.append(page.extract_text() or "")
+        return "\n".join(pages)
 
     raise ValueError("Unsupported file type.")
+
+def _load_memories() -> List[Dict[str, str]]:
+    if not os.path.exists(MEMORY_STORE_PATH):
+        return []
+    try:
+        with open(MEMORY_STORE_PATH, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        if isinstance(data, list):
+            return [m for m in data if isinstance(m, dict) and "text" in m]
+    except (json.JSONDecodeError, OSError):
+        return []
+    return []
+
+
+def _save_memory(text: str) -> Dict[str, str]:
+    memories = _load_memories()
+    entry = {
+        "text": text.strip(),
+        "created_at": datetime.utcnow().isoformat() + "Z"
+    }
+    memories.append(entry)
+    with open(MEMORY_STORE_PATH, "w", encoding="utf-8") as f:
+        json.dump(memories, f, ensure_ascii=False, indent=2)
+    return entry
+
+
+def _format_memory_context(memories: List[Dict[str, str]]) -> str:
+    if not memories:
+        return ""
+    lines = [f"- {m.get('text', '').strip()}" for m in memories if m.get("text")]
+    if not lines:
+        return ""
+    return "Koko memory notes (user-provided, long-term):\n" + "\n".join(lines)
+
+
+def _extract_memory_command(message: str) -> str:
+    if not message:
+        return ""
+    match = re.match(r"^\s*remember\s*[:\-]?\s*(.+)$", message, re.IGNORECASE)
+    if match:
+        return match.group(1).strip()
+    return ""
+
 
 
 def _normalize_sheet_export_url(sheet_url: str) -> str:
@@ -394,6 +447,17 @@ def test_db():
     rows = run_sql("SELECT NOW() AS server_time;")
     return jsonify(rows)
 
+@app.route("/memories", methods=["GET", "DELETE"])
+def memories():
+    if request.method == "DELETE":
+        try:
+            with open(MEMORY_STORE_PATH, "w", encoding="utf-8") as f:
+                json.dump([], f)
+        except OSError:
+            return jsonify({"error": "Failed to clear memories."}), 500
+        return jsonify({"message": "Memories cleared."})
+
+    return jsonify({"memories": _load_memories()})
 
 @app.route("/upload_doc", methods=["POST"])
 def upload_doc():
@@ -468,6 +532,15 @@ def chat_stream():
     user_message = request.json.get("message", "")
     tone_mode = request.json.get("tone")
 
+    memory_text = _extract_memory_command(user_message)
+
+    if memory_text:
+        entry = _save_memory(memory_text)
+        conversation_history.append({
+            "role": "system",
+            "content": f"Memory saved: {entry['text']}"
+        })
+
     if tone_mode:
         conversation_history.append({
             "role": "system",
@@ -486,6 +559,13 @@ def chat_stream():
 
         try:
             current_input = list(conversation_history)
+            memory_context = _format_memory_context(_load_memories())
+            if memory_context:
+                current_input = [
+                    current_input[0],
+                    {"role": "system", "content": memory_context},
+                ] + current_input[1:]
+
             final_text = ""
             last_sql = {"query": None, "rows": []}
             max_rounds = 6
