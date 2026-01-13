@@ -47,8 +47,8 @@
       flex-direction:column;
       gap:12px;
       padding:16px;
-      background: rgb(170, 206, 253);
-      border-right:1px solid var(--border);
+      background: linear-gradient(180deg, #eff6ff 0%, #dbeafe 100%);
+      border-right:1px solid rgba(191,219,254,.9);
       backdrop-filter: blur(10px);
       overflow:hidden;        /* ✅ prevent sidebar itself from scrolling */
     }
@@ -67,7 +67,7 @@
       flex-direction:column;
       gap:10px;
       padding-top:10px;
-      border-top:1px solid var(--border);
+      border-top:1px solid rgba(191,219,254,.7);
     }
 
     .sb-top{
@@ -87,22 +87,57 @@
       width: 70px; height: 70px;
       border-radius:12px;
       object-fit:cover;
-      border:1px solid var(--border);
+      border:1px solid rgba(191,219,254,.8);
+      background: rgba(255,255,255,.9);
     }
     .brand .name{
       display:flex; flex-direction:column;
       line-height:1.1;
     }
     .brand .name b{font-size:14px}
-    .brand .name span{font-size:12px; color:black}
+    .brand .name span{font-size:12px; color:#475569}
+    .brand-status{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      margin-top:6px;
+      padding:4px 8px;
+      border-radius:999px;
+      font-size:11px;
+      color:#0f172a;
+      background: rgba(255,255,255,.65);
+      border:1px solid rgba(15,23,42,.12);
+      width:fit-content;
+    }
+    .brand-status .dot{
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:#22c55e;
+      box-shadow:0 0 8px rgba(34,197,94,.7);
+      animation:pulse 2.4s ease-in-out infinite;
+    }
+    .brand-status.thinking .dot{
+      background:#f59e0b;
+      box-shadow:0 0 8px rgba(245,158,11,.7);
+    }
+    .brand-status.listening .dot{
+      background:#6366f1;
+      box-shadow:0 0 8px rgba(99,102,241,.7);
+    }
+    .brand-status.speaking .dot{
+      background:#ec4899;
+      box-shadow:0 0 8px rgba(236,72,153,.7);
+    }
 
     .sb-btn{
       width:100%;
       padding:10px 12px;
       border-radius:12px;
-      border:1px solid var(--border);
-      background: rgba(0, 0, 0, 0.04);
-      color:var(--text);
+      border:1px solid rgba(191,219,254,.9);
+      background: rgba(255,255,255,.9);
+      color:#2563eb;
+      box-shadow: 0 6px 16px rgba(37,99,235,.12);
       cursor:pointer;
       display:flex;
       align-items:center;
@@ -111,15 +146,15 @@
       transition:.18s ease;
     }
     .sb-btn:hover{
-      background: rgba(255,255,255,.07);
-      border-color: rgba(255,255,255,.16);
+      background: #eff6ff;
+      border-color: rgba(147,197,253,.9);
       transform: translateY(-1px);
     }
 
     .sb-section-title{
       margin-top:8px;
       font-size:12px;
-      color:black;
+      color:#64748b;
       padding:4px 6px;
       text-transform:uppercase;
       letter-spacing:.08em;
@@ -133,11 +168,11 @@
 
     .sb-search{
       width:100%;
-      border:1px solid var(--border);
+      border:1px solid rgba(191,219,254,.9);
       border-radius:10px;
       padding:8px 10px;
-      background: rgba(255,255,255,.2);
-      color:var(--text);
+      background: rgba(255,255,255,.85);
+      color:#0f172a;
       outline:none;
       font-size:12px;
     }
@@ -150,9 +185,9 @@
     }
 
     .tag-filter{
-      border:1px solid var(--border);
-      background: rgba(0, 0, 0, 0.04);
-      color:var(--text);
+      border:1px solid rgba(191,219,254,.9);
+      background: rgba(255,255,255,.8);
+      color:#1e3a8a;
       border-radius:999px;
       padding:4px 8px;
       font-size:11px;
@@ -160,8 +195,8 @@
     }
 
     .tag-filter.active{
-      background: rgba(99,102,241,.18);
-      border-color: rgba(99,102,241,.4);
+      background: rgba(191,219,254,.8);
+      border-color: rgba(147,197,253,.9);
     }
 
     .chat-tags{
@@ -198,6 +233,42 @@
       color:var(--text);
     }
 
+        .typing-indicator{
+      display:none;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      margin-top:12px;
+      border-radius:14px;
+      border:1px solid rgba(15,23,42,.08);
+      background: rgba(255,255,255,.65);
+      color:#0f172a;
+      font-size:13px;
+      width:fit-content;
+      opacity:0;
+      transform:translateY(6px);
+      transition:opacity .2s ease, transform .2s ease;
+    }
+    .typing-indicator.show{
+      display:flex;
+      opacity:1;
+      transform:translateY(0);
+    }
+    .typing-indicator .dots{
+      display:inline-flex;
+      gap:4px;
+    }
+    .typing-indicator .dots span{
+      width:6px;
+      height:6px;
+      border-radius:50%;
+      background:#346aff;
+      animation:typing 1.2s infinite ease-in-out;
+    }
+    .typing-indicator .dots span:nth-child(2){ animation-delay:.2s; }
+    .typing-indicator .dots span:nth-child(3){ animation-delay:.4s; }
+
+
     .sb-bottom{
       display:flex;
       flex-direction:column;
@@ -211,15 +282,16 @@
       border-radius:14px;
       padding:11px 12px;
       cursor:pointer;
-      color:var(--text);
-      background: linear-gradient(90deg, rgb(249, 250, 250), rgb(249, 250, 250));
-      box-shadow: 0 10px 25px rgba(99,102,241,.18);
+      color:#1f2937;
+      background: rgba(255,255,255,.85);
+      border:1px solid rgba(191,219,254,.9);
+      box-shadow: 0 8px 20px rgba(59,130,246,.12);
       transition:.15s ease;
     }
     .pill:hover{transform: translateY(-1px); filter:saturate(1.1)}
     .ghost{
-      background: rgba(255,255,255,.05);
-      border:1px solid var(--border);
+      background: rgba(255,255,255,.6);
+      border:1px solid rgba(191,219,254,.7);
       box-shadow:none;
     }
 
@@ -336,16 +408,35 @@
   .koko-float{
     position: fixed;
     bottom: 16px;
-    left: calc(280px + 16px);
-    z-index: 50;           /* below UI, above background */
+    right: 16px;           /* below UI, above background */
     pointer-events: none; /* don't block clicks */
   }
 
   .koko-float img{
-    width: 200px;           /* 🔴 THIS was missing */
-    height: 250px;
+    width: 84px;
+    height: 84px;
     border-radius: 18px;
     opacity: .95;
+        box-shadow: 0 18px 45px rgba(99,102,241,.25);
+    animation: floatBreath 4s ease-in-out infinite;
+  }
+
+  @keyframes messageIn{
+    from{ opacity:0; transform:translateY(8px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+  @keyframes floatBreath{
+    0%,100%{ transform:translateY(0) scale(1); }
+    50%{ transform:translateY(-6px) scale(1.02); }
+  }
+  @keyframes pulse{
+    0%,100%{ transform:scale(1); opacity:.8; }
+    50%{ transform:scale(1.2); opacity:1; }
+  }
+  @keyframes typing{
+    0%,80%,100%{ transform:translateY(0); opacity:.5; }
+    40%{ transform:translateY(-4px); opacity:1; }
+
   }
 
   .sidebar{
@@ -472,21 +563,35 @@ textarea{
   display:flex;
   gap:12px;
   align-items:flex-start;
+ animation:messageIn .2s ease forwards;
 }
 
 /* koko left, you right */
 .msg.user{ justify-content:flex-end; }
-.msg.koko{ justify-content:flex-start; }
+.msg.koko{
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-direction: row-reverse;
+    gap: 8px;
+}
+
+.msg.koko .avatar{
+  width:36px;
+  height:36px;
+  border-radius:12px;
+  align-self: flex-end;
+}
 
 /* avatar */
 .avatar{
-  width:44px;
-  height:44px;
-  border-radius:15px;
+  width:50px;
+  height:50px;
   object-fit:cover;
   border:1px solid rgba(255,255,255,.14);
   flex: 0 0 auto;
   margin-top:2px;
+  box-shadow:0 0 16px rgba(99,102,241,.25);
+
 }
 
 /* the card bubble */
@@ -584,6 +689,11 @@ textarea{
           <div class="name">
             <b>Koko AI 🐨</b>
             <span>Your AI friend for HCP</span>
+              <div class="brand-status listening" id="kokoStatus">
+              <span class="dot"></span>
+              <span class="label">Listening</span>
+            </div>
+
           </div>
         </div>
       </div>
@@ -625,6 +735,15 @@ textarea{
       <!-- Chat -->
       <section class="chat-shell" id="promptArea">
         <div id="messages"></div>
+          <div class="typing-indicator" id="typingIndicator" aria-live="polite">
+          <span>Koko is thinking</span>
+          <span class="dots" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </div>
+
 
         <div class="promptbar">
           <input id="docUpload" type="file" accept=".txt,.md,.csv,.pdf" hidden />
@@ -662,6 +781,30 @@ textarea{
   let pinnedItems = [];
   let bookmarkedItems = [];
   let activeTagFilter = "all";
+  let hasShownTyping = false;
+
+  function setKokoStatus(state, label) {
+    const statusEl = document.getElementById("kokoStatus");
+    if (!statusEl) return;
+    statusEl.classList.remove("listening", "thinking", "speaking");
+    statusEl.classList.add(state);
+    const labelEl = statusEl.querySelector(".label");
+    if (labelEl) labelEl.textContent = label;
+  }
+
+  function showTypingIndicator() {
+    const indicator = document.getElementById("typingIndicator");
+    if (!indicator) return;
+    indicator.classList.add("show");
+  }
+
+  function hideTypingIndicator() {
+    const indicator = document.getElementById("typingIndicator");
+    if (!indicator) return;
+    indicator.classList.remove("show");
+  }
+
+
 
     function escapeHtml(str) {
     return String(str)
@@ -973,6 +1116,9 @@ async function sendMessage() {
   isSending = true;
   sendBtn.disabled = true;
   input.value = "";
+  hasShownTyping = false;
+  setKokoStatus("thinking", "Thinking");
+  showTypingIndicator();
 
   // ✅ show + save user msg
   chat.messages.push({ who: "You", text: userText });
@@ -1037,6 +1183,11 @@ async function sendMessage() {
         const payload = JSON.parse(part.slice(6));
 
         if (payload.delta) {
+            if (!hasShownTyping) {
+            hideTypingIndicator();
+            setKokoStatus("speaking", "Responding");
+            hasShownTyping = true;
+          }
           kokoFull += payload.delta;
           span.textContent += payload.delta;
           messagesEl.scrollTop = messagesEl.scrollHeight;
@@ -1064,6 +1215,8 @@ async function sendMessage() {
     isSending = false;
     sendBtn.disabled = false;
     input.focus();
+    hideTypingIndicator();
+    setKokoStatus("listening", "Listening");
   }
 }
 
