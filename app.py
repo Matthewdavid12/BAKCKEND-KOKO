@@ -366,10 +366,10 @@ SCHEMA_TOOL = {
 app = Flask(__name__)
 ALLOWED_ORIGINS = [
     "http://localhost:5173",
-    "https://YOUR-FRONTEND-ONRENDER.onrender.com",
+    "https://bakckend-koko.onrender.com/",
 ]
 
-CORS(app, resources={r"/*": {"origins": ALLOWED_ORIGINS}})
+CORS(app, resources={r"/*": {"origins": ["http://localhost:5173"]}})
 client = OpenAI()
 
 SYSTEM_PROMPT = """
