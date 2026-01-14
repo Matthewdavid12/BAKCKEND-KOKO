@@ -134,6 +134,7 @@ DB_CONFIG = {
 }
 
 
+
 # -----------------------------
 # JSON-safe serialization (THE FIX)
 # -----------------------------
@@ -363,7 +364,12 @@ SCHEMA_TOOL = {
 # App
 # -----------------------------
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": ["http://localhost:5173"]}})
+ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "https://YOUR-FRONTEND-ONRENDER.onrender.com",
+]
+
+CORS(app, resources={r"/*": {"origins": ALLOWED_ORIGINS}})
 client = OpenAI()
 
 SYSTEM_PROMPT = """
@@ -440,6 +446,14 @@ MAX_HISTORY_MESSAGES = 30  # keep it light
 def test_db():
     rows = run_sql("SELECT NOW() AS server_time;")
     return jsonify(rows)
+
+@app.route("/")
+def home():
+    return jsonify({
+        "status": "Koko backend is alive 🐨",
+        "endpoints": ["/test_db", "/chat_stream", "/memories", "/upload_doc", "/load_sheet"]
+    }), 200
+
 
 @app.route("/memories", methods=["GET", "DELETE"])
 def memories():
