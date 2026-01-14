@@ -1,0 +1,596 @@
+2026-01-14T16:43:05.178857Z  INFO tailwindcss_oxide::scanner: Provided sources:
+2026-01-14T16:43:05.178983Z  INFO tailwindcss_oxide::scanner: Source: PublicSourceEntry { base: "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles", pattern: "../**/*.{js,ts,jsx,tsx}", negated: false }
+2026-01-14T16:43:05.179722Z  INFO tailwindcss_oxide::scanner: Optimized sources:
+2026-01-14T16:43:05.179746Z  INFO tailwindcss_oxide::scanner: Source: Pattern { base: "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src", pattern: "**/*.js" }
+2026-01-14T16:43:05.179765Z  INFO tailwindcss_oxide::scanner: Source: Pattern { base: "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src", pattern: "**/*.ts" }
+2026-01-14T16:43:05.179922Z  INFO tailwindcss_oxide::scanner: Source: Pattern { base: "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src", pattern: "**/*.jsx" }
+2026-01-14T16:43:05.179935Z  INFO tailwindcss_oxide::scanner: Source: Pattern { base: "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src", pattern: "**/*.tsx" }
+2026-01-14T16:43:05.182374Z  INFO scan_sources: tailwindcss_oxide::scanner: enter
+2026-01-14T16:43:05.183725Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:43:05.183884Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\App.tsx"
+2026-01-14T16:43:05.184083Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:43:05.184233Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ChatArea.tsx"
+2026-01-14T16:43:05.184314Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ChatMessage.tsx"
+2026-01-14T16:43:05.184437Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:43:05.184582Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma\\ImageWithFallback.tsx"
+2026-01-14T16:43:05.184693Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\Sidebar.tsx"
+2026-01-14T16:43:05.184814Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:43:05.184967Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\accordion.tsx"
+2026-01-14T16:43:05.185043Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\alert-dialog.tsx"
+2026-01-14T16:43:05.185119Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\alert.tsx"
+2026-01-14T16:43:05.185193Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\aspect-ratio.tsx"
+2026-01-14T16:43:05.185271Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\avatar.tsx"
+2026-01-14T16:43:05.185347Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\badge.tsx"
+2026-01-14T16:43:05.185421Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\breadcrumb.tsx"
+2026-01-14T16:43:05.185495Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\button.tsx"
+2026-01-14T16:43:05.185568Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\calendar.tsx"
+2026-01-14T16:43:05.185692Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\card.tsx"
+2026-01-14T16:43:05.185768Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\carousel.tsx"
+2026-01-14T16:43:05.185841Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\chart.tsx"
+2026-01-14T16:43:05.185916Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\checkbox.tsx"
+2026-01-14T16:43:05.185991Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\collapsible.tsx"
+2026-01-14T16:43:05.186063Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\command.tsx"
+2026-01-14T16:43:05.186138Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\context-menu.tsx"
+2026-01-14T16:43:05.186211Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\dialog.tsx"
+2026-01-14T16:43:05.186288Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\drawer.tsx"
+2026-01-14T16:43:05.186363Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\dropdown-menu.tsx"
+2026-01-14T16:43:05.186444Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\form.tsx"
+2026-01-14T16:43:05.186519Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\hover-card.tsx"
+2026-01-14T16:43:05.186592Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\input-otp.tsx"
+2026-01-14T16:43:05.186665Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\input.tsx"
+2026-01-14T16:43:05.186743Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\label.tsx"
+2026-01-14T16:43:05.186817Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\menubar.tsx"
+2026-01-14T16:43:05.186891Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\navigation-menu.tsx"
+2026-01-14T16:43:05.186964Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\pagination.tsx"
+2026-01-14T16:43:05.187039Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\popover.tsx"
+2026-01-14T16:43:05.187117Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\progress.tsx"
+2026-01-14T16:43:05.187189Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\radio-group.tsx"
+2026-01-14T16:43:05.187292Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\resizable.tsx"
+2026-01-14T16:43:05.187368Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\scroll-area.tsx"
+2026-01-14T16:43:05.187475Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\select.tsx"
+2026-01-14T16:43:05.187551Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\separator.tsx"
+2026-01-14T16:43:05.187636Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\sheet.tsx"
+2026-01-14T16:43:05.187741Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\sidebar.tsx"
+2026-01-14T16:43:05.187854Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\skeleton.tsx"
+2026-01-14T16:43:05.187972Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\slider.tsx"
+2026-01-14T16:43:05.188083Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\sonner.tsx"
+2026-01-14T16:43:05.188196Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\switch.tsx"
+2026-01-14T16:43:05.188311Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\table.tsx"
+2026-01-14T16:43:05.188385Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\tabs.tsx"
+2026-01-14T16:43:05.188478Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\textarea.tsx"
+2026-01-14T16:43:05.188552Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\toggle-group.tsx"
+2026-01-14T16:43:05.188625Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\toggle.tsx"
+2026-01-14T16:43:05.188697Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\tooltip.tsx"
+2026-01-14T16:43:05.188768Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\use-mobile.ts"
+2026-01-14T16:43:05.188837Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\utils.ts"
+2026-01-14T16:43:05.188936Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\use-mobile.ts"
+2026-01-14T16:43:05.189110Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:43:05.189341Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\main.tsx"
+2026-01-14T16:43:05.189461Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:43:05.190677Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:43:05.191201Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:43:05.191632Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:43:05.191957Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:43:05.194249Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:43:05.194511Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:43:05.195006Z  INFO scan_sources: tailwindcss_oxide::scanner: exit
+2026-01-14T16:43:05.195022Z  INFO extract_candidates: tailwindcss_oxide::scanner: enter
+2026-01-14T16:43:05.195033Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: enter
+2026-01-14T16:43:05.195037Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: Reading 55 file(s)
+2026-01-14T16:43:05.195403Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\App.tsx"
+2026-01-14T16:43:05.195517Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ChatArea.tsx"
+2026-01-14T16:43:05.195834Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ChatMessage.tsx"
+2026-01-14T16:43:05.195855Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\input.tsx"
+2026-01-14T16:43:05.195907Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\calendar.tsx"
+2026-01-14T16:43:05.195993Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\label.tsx"
+2026-01-14T16:43:05.195998Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\context-menu.tsx"
+2026-01-14T16:43:05.196095Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma\\ImageWithFallback.tsx"
+2026-01-14T16:43:05.196188Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\Sidebar.tsx"
+2026-01-14T16:43:05.196250Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\card.tsx"
+2026-01-14T16:43:05.196336Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\dialog.tsx"
+2026-01-14T16:43:05.196355Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\menubar.tsx"
+2026-01-14T16:43:05.196523Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\accordion.tsx"
+2026-01-14T16:43:05.196553Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\carousel.tsx"
+2026-01-14T16:43:05.196635Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\drawer.tsx"
+2026-01-14T16:43:05.196726Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\navigation-menu.tsx"
+2026-01-14T16:43:05.196889Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\alert-dialog.tsx"
+2026-01-14T16:43:05.196995Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\chart.tsx"
+2026-01-14T16:43:05.197083Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\dropdown-menu.tsx"
+2026-01-14T16:43:05.197120Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\pagination.tsx"
+2026-01-14T16:43:05.197220Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\alert.tsx"
+2026-01-14T16:43:05.197299Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\checkbox.tsx"
+2026-01-14T16:43:05.197329Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\aspect-ratio.tsx"
+2026-01-14T16:43:05.197424Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\popover.tsx"
+2026-01-14T16:43:05.197428Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\form.tsx"
+2026-01-14T16:43:05.197622Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\collapsible.tsx"
+2026-01-14T16:43:05.197627Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\avatar.tsx"
+2026-01-14T16:43:05.197719Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\progress.tsx"
+2026-01-14T16:43:05.197760Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\hover-card.tsx"
+2026-01-14T16:43:05.197864Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\command.tsx"
+2026-01-14T16:43:05.197955Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\badge.tsx"
+2026-01-14T16:43:05.198061Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\radio-group.tsx"
+2026-01-14T16:43:05.198068Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\skeleton.tsx"
+2026-01-14T16:43:05.198114Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\input-otp.tsx"
+2026-01-14T16:43:05.198196Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\breadcrumb.tsx"
+2026-01-14T16:43:05.198272Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\button.tsx"
+2026-01-14T16:43:05.198324Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\resizable.tsx"
+2026-01-14T16:43:05.198393Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\toggle-group.tsx"
+2026-01-14T16:43:05.198402Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\slider.tsx"
+2026-01-14T16:43:05.198455Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\use-mobile.ts"
+2026-01-14T16:43:05.198491Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\sonner.tsx"
+2026-01-14T16:43:05.198546Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\utils.ts"
+2026-01-14T16:43:05.198572Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\scroll-area.tsx"
+2026-01-14T16:43:05.198630Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\use-mobile.ts"
+2026-01-14T16:43:05.198668Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\toggle.tsx"
+2026-01-14T16:43:05.198702Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\main.tsx"
+2026-01-14T16:43:05.198875Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\switch.tsx"
+2026-01-14T16:43:05.198880Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\tooltip.tsx"
+2026-01-14T16:43:05.198965Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\select.tsx"
+2026-01-14T16:43:05.199205Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\sheet.tsx"
+2026-01-14T16:43:05.199330Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\separator.tsx"
+2026-01-14T16:43:05.199333Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\table.tsx"
+2026-01-14T16:43:05.199414Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\tabs.tsx"
+2026-01-14T16:43:05.199628Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\textarea.tsx"
+2026-01-14T16:43:05.199629Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui\\sidebar.tsx"
+2026-01-14T16:43:05.199684Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: exit
+2026-01-14T16:43:05.199700Z  INFO extract_candidates:parse_all_blobs: tailwindcss_oxide::scanner: enter
+2026-01-14T16:43:05.199709Z  INFO extract_candidates:parse_all_blobs:extract: tailwindcss_oxide::scanner: enter
+2026-01-14T16:43:05.201737Z  INFO extract_candidates:parse_all_blobs:extract: tailwindcss_oxide::scanner: exit
+2026-01-14T16:43:05.201765Z  INFO extract_candidates:parse_all_blobs: tailwindcss_oxide::scanner: exit
+2026-01-14T16:43:05.202099Z  INFO extract_candidates: tailwindcss_oxide::scanner: exit
+2026-01-14T16:43:05.203744Z  INFO get_files: tailwindcss_oxide::scanner: enter
+2026-01-14T16:43:05.203757Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: enter
+2026-01-14T16:43:05.204898Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:43:05.205134Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:43:05.205423Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:43:05.205803Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:43:05.208577Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:43:05.208917Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:43:05.209750Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:43:05.209976Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:43:05.210251Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:43:05.210534Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:43:05.212709Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:43:05.212957Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:43:05.213291Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: exit
+2026-01-14T16:43:05.213367Z  INFO get_files: tailwindcss_oxide::scanner: exit
+2026-01-14T16:43:05.231105Z  INFO get_globs: tailwindcss_oxide::scanner: enter
+2026-01-14T16:43:05.231132Z  INFO get_globs:scan_sources: tailwindcss_oxide::scanner: enter
+2026-01-14T16:43:05.232337Z  INFO get_globs:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:43:05.232592Z  INFO get_globs:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:43:05.232882Z  INFO get_globs:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:43:05.233183Z  INFO get_globs:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:43:05.235585Z  INFO get_globs:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:43:05.235882Z  INFO get_globs:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:43:05.236569Z  INFO get_globs:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:43:05.236793Z  INFO get_globs:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:43:05.237065Z  INFO get_globs:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:43:05.237353Z  INFO get_globs:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:43:05.239755Z  INFO get_globs:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:43:05.240010Z  INFO get_globs:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:43:05.240445Z  INFO get_globs:scan_sources: tailwindcss_oxide::scanner: exit
+2026-01-14T16:43:05.240770Z  INFO get_globs: tailwindcss_oxide::scanner: exit
+2026-01-14T16:43:06.635667Z  INFO scan_sources: tailwindcss_oxide::scanner: enter
+2026-01-14T16:43:06.644716Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:43:06.645254Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:43:06.647354Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:43:06.647722Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:43:06.650315Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:43:06.650654Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:43:06.651503Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:43:06.652152Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:43:06.654450Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:43:06.655622Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:43:06.657900Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:43:06.658749Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:43:06.659319Z  INFO scan_sources: tailwindcss_oxide::scanner: exit
+2026-01-14T16:43:06.659340Z  INFO extract_candidates: tailwindcss_oxide::scanner: enter
+2026-01-14T16:43:06.659347Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: enter
+2026-01-14T16:43:06.659352Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: Reading 0 file(s)
+2026-01-14T16:43:06.659358Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: exit
+2026-01-14T16:43:06.659364Z  INFO extract_candidates:parse_all_blobs: tailwindcss_oxide::scanner: enter
+2026-01-14T16:43:06.659369Z  INFO extract_candidates:parse_all_blobs:extract: tailwindcss_oxide::scanner: enter
+2026-01-14T16:43:06.659375Z  INFO extract_candidates:parse_all_blobs:extract: tailwindcss_oxide::scanner: exit
+2026-01-14T16:43:06.659379Z  INFO extract_candidates:parse_all_blobs: tailwindcss_oxide::scanner: exit
+2026-01-14T16:43:06.659386Z  INFO extract_candidates: tailwindcss_oxide::scanner: exit
+2026-01-14T16:43:06.660511Z  INFO get_files: tailwindcss_oxide::scanner: enter
+2026-01-14T16:43:06.660538Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: enter
+2026-01-14T16:43:06.661917Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:43:06.662161Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:43:06.662466Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:43:06.662768Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:43:06.665138Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:43:06.665446Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:43:06.666148Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:43:06.666375Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:43:06.666650Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:43:06.667168Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:43:06.669909Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:43:06.670206Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:43:06.670578Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: exit
+2026-01-14T16:43:06.670668Z  INFO get_files: tailwindcss_oxide::scanner: exit
+2026-01-14T16:43:06.688859Z  INFO get_globs: tailwindcss_oxide::scanner: enter
+2026-01-14T16:43:06.688888Z  INFO get_globs: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:01.242121Z  INFO scan_sources: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:01.245522Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:47:01.245773Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:47:01.245931Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ChatArea.tsx"
+2026-01-14T16:47:01.246107Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:47:01.246412Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:47:01.249084Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:47:01.249415Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:47:01.250112Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:47:01.250332Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:47:01.250619Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:47:01.250968Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:47:01.253277Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:47:01.253544Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:47:01.253892Z  INFO scan_sources: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:01.253904Z  INFO extract_candidates: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:01.253911Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:01.253915Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: Reading 1 file(s)
+2026-01-14T16:47:01.254011Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ChatArea.tsx"
+2026-01-14T16:47:01.254038Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:01.254045Z  INFO extract_candidates:parse_all_blobs: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:01.254050Z  INFO extract_candidates:parse_all_blobs:extract: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:01.254268Z  INFO extract_candidates:parse_all_blobs:extract: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:01.254279Z  INFO extract_candidates:parse_all_blobs: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:01.254325Z  INFO extract_candidates: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:01.255319Z  INFO get_files: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:01.255330Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:01.256366Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:47:01.256597Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:47:01.256885Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:47:01.257232Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:47:01.260082Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:47:01.260799Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:47:01.262134Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:47:01.262379Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:47:01.262668Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:47:01.262959Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:47:01.265208Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:47:01.265461Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:47:01.265805Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:01.265877Z  INFO get_files: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:01.282903Z  INFO get_globs: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:01.282934Z  INFO get_globs: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:03.068381Z  INFO scan_sources: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:03.069656Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:47:03.069907Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:47:03.070199Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:47:03.070509Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:47:03.072706Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\use-mobile.ts"
+2026-01-14T16:47:03.072899Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:47:03.073207Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:47:03.073886Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:47:03.074106Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:47:03.074380Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:47:03.074673Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:47:03.076959Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:47:03.077215Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:47:03.077570Z  INFO scan_sources: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:03.077583Z  INFO extract_candidates: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:03.077594Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:03.077601Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: Reading 1 file(s)
+2026-01-14T16:47:03.077688Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\use-mobile.ts"
+2026-01-14T16:47:03.077700Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:03.077707Z  INFO extract_candidates:parse_all_blobs: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:03.077712Z  INFO extract_candidates:parse_all_blobs:extract: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:03.079465Z  INFO extract_candidates:parse_all_blobs:extract: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:03.079516Z  INFO extract_candidates:parse_all_blobs: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:03.079556Z  INFO extract_candidates: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:03.081298Z  INFO get_files: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:03.081346Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:03.082915Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:47:03.083179Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:47:03.083477Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:47:03.083790Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:47:03.086266Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:47:03.086586Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:47:03.087270Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:47:03.087494Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:47:03.087768Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:47:03.088054Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:47:03.090580Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:47:03.090864Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:47:03.091250Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:03.091347Z  INFO get_files: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:03.108065Z  INFO get_globs: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:03.108096Z  INFO get_globs: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:03.179484Z  INFO scan_sources: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:03.180848Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:47:03.181114Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:47:03.181416Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:47:03.181887Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:47:03.184584Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:47:03.184911Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:47:03.185610Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:47:03.185843Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:47:03.186159Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:47:03.186454Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:47:03.188982Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:47:03.189438Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:47:03.189936Z  INFO scan_sources: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:03.189958Z  INFO extract_candidates: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:03.189965Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:03.189969Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: Reading 0 file(s)
+2026-01-14T16:47:03.189975Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:03.189980Z  INFO extract_candidates:parse_all_blobs: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:03.189985Z  INFO extract_candidates:parse_all_blobs:extract: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:03.189991Z  INFO extract_candidates:parse_all_blobs:extract: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:03.189995Z  INFO extract_candidates:parse_all_blobs: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:03.190001Z  INFO extract_candidates: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:03.191200Z  INFO get_files: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:03.191226Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:03.193125Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:47:03.193472Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:47:03.193785Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:47:03.194097Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:47:03.197386Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:47:03.197960Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:47:03.198865Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:47:03.199111Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:47:03.199401Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:47:03.199711Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:47:03.202173Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:47:03.202562Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:47:03.202946Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:03.203138Z  INFO get_files: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:03.220376Z  INFO get_globs: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:03.220403Z  INFO get_globs: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:22.211633Z  INFO scan_sources: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:22.214342Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:47:22.215191Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:47:22.216010Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:47:22.216610Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:47:22.220874Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\use-mobile.ts"
+2026-01-14T16:47:22.221254Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:47:22.222789Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:47:22.224586Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:47:22.225285Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:47:22.225875Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:47:22.226951Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:47:22.231663Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:47:22.232193Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:47:22.233143Z  INFO scan_sources: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:22.233172Z  INFO extract_candidates: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:22.233183Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:22.233192Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: Reading 1 file(s)
+2026-01-14T16:47:22.233349Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\use-mobile.ts"
+2026-01-14T16:47:22.233376Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:22.233388Z  INFO extract_candidates:parse_all_blobs: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:22.233398Z  INFO extract_candidates:parse_all_blobs:extract: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:22.233508Z  INFO extract_candidates:parse_all_blobs:extract: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:22.233523Z  INFO extract_candidates:parse_all_blobs: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:22.233548Z  INFO extract_candidates: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:22.234668Z  INFO get_files: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:22.234680Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:22.236328Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:47:22.236615Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:47:22.236953Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:47:22.237291Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:47:22.239972Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:47:22.240426Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:47:22.241278Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:47:22.241550Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:47:22.241860Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:47:22.242172Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:47:22.244409Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:47:22.244655Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:47:22.244999Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:22.245066Z  INFO get_files: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:22.258916Z  INFO get_globs: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:22.258945Z  INFO get_globs: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:24.196382Z  INFO scan_sources: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:24.197661Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:47:24.197923Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:47:24.198219Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:47:24.198519Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:47:24.201687Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\use-mobile.ts"
+2026-01-14T16:47:24.201917Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:47:24.202248Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:47:24.202986Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:47:24.203328Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:47:24.203684Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:47:24.204043Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:47:24.206587Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:47:24.206921Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:47:24.207324Z  INFO scan_sources: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:24.207342Z  INFO extract_candidates: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:24.207348Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:24.207353Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: Reading 1 file(s)
+2026-01-14T16:47:24.207449Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\use-mobile.ts"
+2026-01-14T16:47:24.207465Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:24.207471Z  INFO extract_candidates:parse_all_blobs: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:24.207476Z  INFO extract_candidates:parse_all_blobs:extract: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:24.207722Z  INFO extract_candidates:parse_all_blobs:extract: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:24.207736Z  INFO extract_candidates:parse_all_blobs: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:24.207765Z  INFO extract_candidates: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:24.208862Z  INFO get_files: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:24.208884Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:24.210054Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:47:24.210293Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:47:24.210577Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:47:24.210876Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:47:24.213074Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:47:24.213365Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:47:24.214151Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:47:24.214824Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:47:24.215196Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:47:24.215500Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:47:24.218978Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:47:24.219291Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:47:24.219675Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:24.219779Z  INFO get_files: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:24.258607Z  INFO get_globs: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:24.258647Z  INFO get_globs: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:28.662721Z  INFO scan_sources: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:28.664807Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:47:28.664992Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\App.tsx"
+2026-01-14T16:47:28.665141Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:47:28.665640Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:47:28.665951Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\Sidebar.tsx"
+2026-01-14T16:47:28.666097Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:47:28.668204Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\use-mobile.ts"
+2026-01-14T16:47:28.668378Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:47:28.668668Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:47:28.669340Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:47:28.669565Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:47:28.669845Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:47:28.673910Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:47:28.676470Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:47:28.676831Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:47:28.677390Z  INFO scan_sources: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:28.677422Z  INFO extract_candidates: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:28.677435Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:28.677444Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: Reading 3 file(s)
+2026-01-14T16:47:28.677677Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\App.tsx"
+2026-01-14T16:47:28.677690Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\Sidebar.tsx"
+2026-01-14T16:47:28.677728Z  INFO tailwindcss_oxide::scanner: Reading "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\use-mobile.ts"
+2026-01-14T16:47:28.677819Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:28.677833Z  INFO extract_candidates:parse_all_blobs: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:28.677839Z  INFO extract_candidates:parse_all_blobs:extract: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:28.678225Z  INFO extract_candidates:parse_all_blobs:extract: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:28.678239Z  INFO extract_candidates:parse_all_blobs: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:28.678373Z  INFO extract_candidates: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:28.679997Z  INFO get_files: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:28.680016Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:28.681330Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:47:28.681576Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:47:28.681862Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:47:28.682163Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:47:28.684578Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:47:28.684913Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:47:28.685601Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:47:28.685832Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:47:28.686107Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:47:28.686400Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:47:28.691099Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:47:28.691590Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:47:28.692379Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:28.692553Z  INFO get_files: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:28.711915Z  INFO get_globs: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:28.711946Z  INFO get_globs: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:30.835790Z  INFO scan_sources: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:30.837047Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:47:30.837332Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:47:30.837755Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:47:30.838123Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:47:30.842925Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:47:30.843288Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:47:30.844155Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:47:30.844409Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:47:30.844696Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:47:30.845010Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:47:30.847314Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:47:30.847578Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:47:30.847940Z  INFO scan_sources: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:30.847953Z  INFO extract_candidates: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:30.847959Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:30.847964Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: Reading 0 file(s)
+2026-01-14T16:47:30.847970Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:30.847976Z  INFO extract_candidates:parse_all_blobs: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:30.847981Z  INFO extract_candidates:parse_all_blobs:extract: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:30.847986Z  INFO extract_candidates:parse_all_blobs:extract: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:30.847990Z  INFO extract_candidates:parse_all_blobs: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:30.847996Z  INFO extract_candidates: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:30.849044Z  INFO get_files: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:30.849055Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:30.850109Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:47:30.850343Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:47:30.850620Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:47:30.850917Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:47:30.853601Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:47:30.853978Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:47:30.854694Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:47:30.854931Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:47:30.855214Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:47:30.855515Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:47:30.858338Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:47:30.858615Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:47:30.858974Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:30.859046Z  INFO get_files: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:30.873690Z  INFO get_globs: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:30.873720Z  INFO get_globs: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:35.690010Z  INFO scan_sources: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:35.691359Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:47:35.691620Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:47:35.691918Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:47:35.692224Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:47:35.696507Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:47:35.696910Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:47:35.697625Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:47:35.697856Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:47:35.698132Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:47:35.698426Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:47:35.700749Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:47:35.701011Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:47:35.701359Z  INFO scan_sources: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:35.701372Z  INFO extract_candidates: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:35.701379Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:35.701383Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: Reading 0 file(s)
+2026-01-14T16:47:35.701390Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:35.701395Z  INFO extract_candidates:parse_all_blobs: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:35.701401Z  INFO extract_candidates:parse_all_blobs:extract: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:35.701406Z  INFO extract_candidates:parse_all_blobs:extract: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:35.701411Z  INFO extract_candidates:parse_all_blobs: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:35.701418Z  INFO extract_candidates: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:35.702586Z  INFO get_files: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:35.702598Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:35.703654Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:47:35.703889Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:47:35.704167Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:47:35.704455Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:47:35.706592Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:47:35.706871Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:47:35.707503Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:47:35.707724Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:47:35.707987Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:47:35.708268Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:47:35.710349Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:47:35.710744Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:47:35.711105Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:35.711198Z  INFO get_files: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:35.725355Z  INFO get_globs: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:35.725384Z  INFO get_globs: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:35.773085Z  INFO scan_sources: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:35.774259Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:47:35.774510Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:47:35.774789Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:47:35.775091Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:47:35.777449Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:47:35.777770Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:47:35.778497Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:47:35.778746Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:47:35.779041Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:47:35.779341Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:47:35.781745Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:47:35.781997Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:47:35.782338Z  INFO scan_sources: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:35.782351Z  INFO extract_candidates: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:35.782357Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:35.782362Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: Reading 0 file(s)
+2026-01-14T16:47:35.782367Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:35.782372Z  INFO extract_candidates:parse_all_blobs: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:35.782377Z  INFO extract_candidates:parse_all_blobs:extract: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:35.782382Z  INFO extract_candidates:parse_all_blobs:extract: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:35.782391Z  INFO extract_candidates:parse_all_blobs: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:35.782401Z  INFO extract_candidates: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:35.783435Z  INFO get_files: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:35.783445Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:35.784462Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:47:35.784692Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:47:35.784966Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:47:35.785253Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:47:35.787554Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:47:35.787837Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:47:35.788473Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app"
+2026-01-14T16:47:35.788691Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components"
+2026-01-14T16:47:35.788953Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\figma"
+2026-01-14T16:47:35.789235Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\app\\components\\ui"
+2026-01-14T16:47:35.791336Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\assets"
+2026-01-14T16:47:35.791573Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "C:\\Users\\ITHCP\\OneDrive\\Desktop\\test KOKOai\\src\\styles"
+2026-01-14T16:47:35.791883Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:35.791953Z  INFO get_files: tailwindcss_oxide::scanner: exit
+2026-01-14T16:47:35.805468Z  INFO get_globs: tailwindcss_oxide::scanner: enter
+2026-01-14T16:47:35.805496Z  INFO get_globs: tailwindcss_oxide::scanner: exit

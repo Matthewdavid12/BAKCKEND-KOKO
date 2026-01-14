@@ -1,10 +1,55 @@
 import { Send, Sparkles } from 'lucide-react';
-import { Button } from '@/app/components/ui/button';
-import { Input } from '@/app/components/ui/input';
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ChatMessage } from '@/app/components/ChatMessage';
-import kokoImage from 'figma:asset/e1c442c850e7334a22b1bcc6edeb4bd80a507512.png';
+import { ChatMessage } from "./ChatMessage";
+import kokoImage from "../../assets/koala_thinking.png"
+
+async function streamToFlask(message: string, onDelta: (t: string) => void) {
+  const res = await fetch("http://localhost:5000/chat_stream", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message }),
+  });
+
+  if (!res.ok) {
+    const txt = await res.text();
+    throw new Error(txt || "Flask error");
+  }
+
+  const reader = res.body?.getReader();
+  if (!reader) throw new Error("No stream reader");
+
+  const decoder = new TextDecoder();
+  let buffer = "";
+
+  while (true) {
+    const { value, done } = await reader.read();
+    if (done) break;
+
+    buffer += decoder.decode(value, { stream: true });
+
+    // SSE messages are separated by blank line
+    const chunks = buffer.split("\n\n");
+    buffer = chunks.pop() || "";
+
+    for (const chunk of chunks) {
+      // each message has lines like: data: {...}
+      const lines = chunk.split("\n");
+      for (const line of lines) {
+        if (!line.startsWith("data:")) continue;
+
+        const jsonStr = line.replace(/^data:\s*/, "").trim();
+        if (!jsonStr) continue;
+
+        const payload = JSON.parse(jsonStr);
+        if (payload.delta) onDelta(payload.delta);
+        if (payload.done) return;
+      }
+    }
+  }
+}
 
 const suggestedPrompts = [
   'Summarize',
@@ -25,32 +70,49 @@ export function ChatArea() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isTyping, setIsTyping] = useState(false);
 
-  const handleSendMessage = () => {
-    if (!message.trim()) return;
+const handleSendMessage = async () => {
+  if (!message.trim() || isTyping) return;
 
-    const newMessage: Message = {
-      id: Date.now().toString(),
-      text: message,
-      sender: 'user',
-      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-    };
+  const userText = message.trim();
 
-    setMessages(prev => [...prev, newMessage]);
-    setMessage('');
-    
-    // Simulate AI response
-    setIsTyping(true);
-    setTimeout(() => {
-      const aiResponse: Message = {
-        id: (Date.now() + 1).toString(),
-        text: "I'm Koko, your AI assistant! How can I help you with that?",
-        sender: 'ai',
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      };
-      setMessages(prev => [...prev, aiResponse]);
-      setIsTyping(false);
-    }, 1000);
+  const userMsg: Message = {
+    id: Date.now().toString(),
+    text: userText,
+    sender: "user",
+    timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
   };
+
+  const aiId = (Date.now() + 1).toString();
+
+  const aiMsg: Message = {
+    id: aiId,
+    text: "",
+    sender: "ai",
+    timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+  };
+
+  // add user + empty ai message
+  setMessages((prev) => [...prev, userMsg, aiMsg]);
+  setMessage("");
+  setIsTyping(true);
+
+  try {
+    await streamToFlask(userText, (delta) => {
+      setMessages((prev) =>
+        prev.map((m) => (m.id === aiId ? { ...m, text: m.text + delta } : m))
+      );
+    });
+  } catch (err: any) {
+    setMessages((prev) =>
+      prev.map((m) =>
+        m.id === aiId ? { ...m, text: `[Server error] ${err?.message ?? err}` } : m
+      )
+    );
+  } finally {
+    setIsTyping(false);
+  }
+};
+
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -186,6 +248,8 @@ export function ChatArea() {
         )}
       </div>
 
+      
+
       {/* Input Area */}
       <div className="border-t border-gray-200 bg-white p-6">
         <div className="max-w-4xl mx-auto">
@@ -230,5 +294,7 @@ export function ChatArea() {
         </div>
       </div>
     </div>
+
+    
   );
 }

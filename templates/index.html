@@ -680,6 +680,7 @@ textarea{
 </head>
 
 <body>
+<div id="root"></div>
   <div class="app">
     <!-- Sidebar -->
     <aside class="sidebar">
@@ -773,7 +774,8 @@ textarea{
   </div>
 
   </div>
-
+  
+  <script type="module" src="/src/main.tsx"></script>
   <script>
   let chats = [];
   let activeChatId = null;
