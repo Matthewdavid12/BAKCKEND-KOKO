@@ -365,13 +365,31 @@ SCHEMA_TOOL = {
 # App
 # -----------------------------
 app = Flask(__name__)
-ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "https://bakckend-koko-frontend.onrender.com"
-]
-
-CORS(app, resources={r"/*": {"origins": ALLOWED_ORIGINS}}, supports_credentials=True)
 client = OpenAI()
+
+def _cors_allowed_origin():
+    origin = request.headers.get("Origin")
+    if not origin:
+        return ""
+    allowed = os.environ.get(
+        "CORS_ALLOW_ORIGINS",
+        "https://bakckend-koko-frontend.onrender.com",
+    )
+    allowed_list = [item.strip() for item in allowed.split(",") if item.strip()]
+    if "*" in allowed_list or origin in allowed_list:
+        return origin
+    return ""
+
+
+@app.after_request
+def add_cors_headers(response):
+    allowed_origin = _cors_allowed_origin()
+    if allowed_origin:
+        response.headers["Access-Control-Allow-Origin"] = allowed_origin
+        response.headers["Vary"] = "Origin"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+    return response
 
 SYSTEM_PROMPT = """
 Your name is Koko.
@@ -536,12 +554,11 @@ def load_sheet():
         "chars": len(truncated)
     })
 
-@app.route("/chat_stream", methods=["OPTIONS"])
-def chat_stream_options():
-    return "", 200
 
-@app.route("/chat_stream", methods=["POST"])
+@app.route("/chat_stream", methods=["POST", "OPTIONS"])
 def chat_stream():
+    if request.method == "OPTIONS":
+        return ("", 204)
     user_message = request.json.get("message", "")
     tone_mode = request.json.get("tone")
 
