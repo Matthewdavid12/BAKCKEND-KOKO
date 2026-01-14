@@ -368,11 +368,13 @@ app = Flask(__name__)
 client = OpenAI()
 
 def _cors_allowed_origins():
-    allowed = os.environ.get(
-        "CORS_ALLOW_ORIGINS",
-        "https://bakckend-koko-frontend.onrender.com",
-    )
+    default_origin = "https://bakckend-koko-frontend.onrender.com"
+    allowed = os.environ.get("CORS_ALLOW_ORIGINS")
+    if allowed is None or not allowed.strip():
+        allowed = default_origin
     return [item.strip() for item in allowed.split(",") if item.strip()]
+
+
 
 
 def _cors_allowed_origin():
