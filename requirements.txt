@@ -3,3 +3,4 @@ gunicorn
 openai
 psycopg2-binary
 PyPDF2
+flask-cors
