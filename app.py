@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, Response
+from flask import Flask, render_template, request, jsonify, Response, make_response
 from openai import OpenAI
 
 import os
@@ -367,13 +367,17 @@ SCHEMA_TOOL = {
 app = Flask(__name__)
 client = OpenAI()
 
+def _normalize_origin(value: str) -> str:
+    return value.rstrip("/") if value else value
+
+
 def _cors_allowed_origins():
     default_origin = "https://bakckend-koko-frontend.onrender.com"
     allowed = os.environ.get("CORS_ALLOW_ORIGINS")
     if allowed is None or not allowed.strip():
         allowed = default_origin
-    return [item.strip() for item in allowed.split(",") if item.strip()]
-
+    origins = [item.strip() for item in allowed.split(",") if item.strip()]
+    return [_normalize_origin(origin) for origin in origins]
 
 
 
@@ -392,7 +396,6 @@ CORS(
     methods=["GET", "POST", "OPTIONS"],
     allow_headers=["Content-Type", "Authorization"],
 )
-
 
 
 @app.after_request
