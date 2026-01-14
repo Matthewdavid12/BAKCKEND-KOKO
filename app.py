@@ -367,7 +367,7 @@ SCHEMA_TOOL = {
 app = Flask(__name__)
 ALLOWED_ORIGINS = [
     "http://localhost:5173",
-    "https://bakckend-koko.onrender.com/",
+    "https://bakckend-koko-frontend.onrender.com"
 ]
 
 CORS(app, resources={r"/*": {"origins": ALLOWED_ORIGINS}}, supports_credentials=True)
