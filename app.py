@@ -367,18 +367,30 @@ SCHEMA_TOOL = {
 app = Flask(__name__)
 client = OpenAI()
 
-def _cors_allowed_origin():
-    origin = request.headers.get("Origin")
-    if not origin:
-        return ""
+def _cors_allowed_origins():
     allowed = os.environ.get(
         "CORS_ALLOW_ORIGINS",
         "https://bakckend-koko-frontend.onrender.com",
     )
-    allowed_list = [item.strip() for item in allowed.split(",") if item.strip()]
+    return [item.strip() for item in allowed.split(",") if item.strip()]
+
+
+def _cors_allowed_origin():
+    origin = request.headers.get("Origin")
+    if not origin:
+        return ""
+    allowed_list = _cors_allowed_origins()
     if "*" in allowed_list or origin in allowed_list:
         return origin
     return ""
+
+CORS(
+    app,
+    resources={r"/*": {"origins": _cors_allowed_origins()}},
+    methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Content-Type", "Authorization"],
+)
+
 
 
 @app.after_request
