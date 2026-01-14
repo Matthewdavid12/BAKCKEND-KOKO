@@ -17,6 +17,7 @@ from werkzeug.utils import secure_filename
 from PyPDF2 import PdfReader
 from flask_cors import CORS
 
+
 # -----------------------------
 # Config
 # -----------------------------
@@ -369,7 +370,7 @@ ALLOWED_ORIGINS = [
     "https://bakckend-koko.onrender.com/",
 ]
 
-CORS(app, resources={r"/*": {"origins": ["http://localhost:5173"]}})
+CORS(app, resources={r"/*": {"origins": ALLOWED_ORIGINS}}, supports_credentials=True)
 client = OpenAI()
 
 SYSTEM_PROMPT = """
@@ -534,6 +535,10 @@ def load_sheet():
         "message": "Google Sheet loaded. Ask me anything about it!",
         "chars": len(truncated)
     })
+
+@app.route("/chat_stream", methods=["OPTIONS"])
+def chat_stream_options():
+    return "", 200
 
 @app.route("/chat_stream", methods=["POST"])
 def chat_stream():
