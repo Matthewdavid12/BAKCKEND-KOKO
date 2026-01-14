@@ -7,7 +7,8 @@ import { ChatMessage } from "./ChatMessage";
 import kokoImage from "../../assets/koala_thinking.png"
 
 async function streamToFlask(message: string, onDelta: (t: string) => void) {
-  const res = await fetch("http://localhost:5000/chat_stream", {
+const API_BASE = import.meta.env.VITE_API_BASE;
+const res = await fetch(`${API_BASE}/chat_stream`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ message }),
