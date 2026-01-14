@@ -372,14 +372,10 @@ def _normalize_origin(value: str) -> str:
 
 
 def _cors_allowed_origins():
-    default_origins = {
-        "https://bakckend-koko-frontend.onrender.com",
-        "https://backkend-koko-frontend.onrender.com",
-    }
-    allowed = os.environ.get("CORS_ALLOW_ORIGINS")
-    if allowed is None or not allowed.strip():
-        return sorted(default_origins)
-    return [item.strip() for item in allowed.split(",") if item.strip()]
+    return [
+        "https://bakckend-koko.onrender.com",
+        "http://localhost:5173",
+    ]
 
 
 def _cors_allowed_origin():
@@ -394,8 +390,6 @@ def _cors_allowed_origin():
 CORS(
     app,
     resources={r"/*": {"origins": _cors_allowed_origins()}},
-    methods=["GET", "POST", "OPTIONS"],
-    allow_headers=["Content-Type", "Authorization"],
 )
 
 
@@ -408,6 +402,8 @@ def add_cors_headers(response):
     response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
     response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
     return response
+
+
 
 SYSTEM_PROMPT = """
 Your name is Koko.
