@@ -372,13 +372,14 @@ def _normalize_origin(value: str) -> str:
 
 
 def _cors_allowed_origins():
-    default_origin = "https://bakckend-koko-frontend.onrender.com"
+    default_origins = {
+        "https://bakckend-koko-frontend.onrender.com",
+        "https://backkend-koko-frontend.onrender.com",
+    }
     allowed = os.environ.get("CORS_ALLOW_ORIGINS")
     if allowed is None or not allowed.strip():
-        allowed = default_origin
-    origins = [item.strip() for item in allowed.split(",") if item.strip()]
-    return [_normalize_origin(origin) for origin in origins]
-
+        return sorted(default_origins)
+    return [item.strip() for item in allowed.split(",") if item.strip()]
 
 
 def _cors_allowed_origin():
