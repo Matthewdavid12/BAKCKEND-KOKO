@@ -389,9 +389,12 @@ def _cors_allowed_origin():
 
 CORS(
     app,
-    resources={r"/*": {"origins": _cors_allowed_origins()}},
+    origins=[
+        "https://backkend-koko-frontend.onrender.com",
+        "https://bakckend-koko-frontend.onrender.com",
+        "http://localhost:5173",
+    ],
 )
-
 
 @app.after_request
 def add_cors_headers(response):
@@ -572,7 +575,7 @@ def load_sheet():
 @app.route("/chat_stream", methods=["POST", "OPTIONS"])
 def chat_stream():
     if request.method == "OPTIONS":
-        return ("", 204)
+        return "", 204
     user_message = request.json.get("message", "")
     tone_mode = request.json.get("tone")
 
