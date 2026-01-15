@@ -1,14 +1,66 @@
-import { Send, Sparkles } from 'lucide-react';
+import { Paperclip, Send, Sparkles } from 'lucide-react';
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ChatMessage } from "./ChatMessage";
 import kokoImage from "../../assets/koala_thinking.png"
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+
+type Props = {
+  message: string;
+  sender: "user" | "ai";
+  timestamp: string;
+};
+
+export function ChatMessage({ message, sender, timestamp }: Props) {
+  const isAI = sender === "ai";
+
+  // ✅ This MUST be inside the component (before return)
+  const spaced = message
+    .replace(/---\s*/g, "\n\n---\n\n")
+    .replace(/###\s*/g, "\n\n### ")
+    .replace(/\n{3,}/g, "\n\n");
+
+  return (
+    <div className={`flex gap-3 mb-4 ${isAI ? "" : "justify-end"}`}>
+      <div
+        className={`max-w-[85%] rounded-2xl px-4 py-3 shadow-sm border ${
+          isAI
+            ? "bg-white border-gray-200 text-gray-900"
+            : "bg-blue-500 border-blue-500 text-white"
+        }`}
+      >
+        <div
+          className={`prose prose-sm max-w-none leading-relaxed ${
+            isAI ? "prose-gray" : "prose-invert"
+          }`}
+        >
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            {spaced}
+          </ReactMarkdown>
+        </div>
+
+        <div className={`mt-2 text-xs ${isAI ? "text-gray-400" : "text-blue-100"}`}>
+          {timestamp}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+const resolveApiBase = () => {
+  const rawBase = import.meta.env.VITE_API_BASE;
+  if (rawBase && rawBase.trim().length > 0) {
+    return rawBase.replace(/\/+$/, "");
+  }
+  return "";
+};
 
 async function streamToFlask(message: string, onDelta: (t: string) => void) {
-const API_BASE = import.meta.env.VITE_API_BASE;
-const res = await fetch(`${API_BASE}/chat_stream`, {
+  const apiBase = resolveApiBase();
+  const res = await fetch(`${apiBase}/chat_stream`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ message }),
@@ -70,6 +122,8 @@ export function ChatArea() {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
   const [isTyping, setIsTyping] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
 const handleSendMessage = async () => {
   if (!message.trim() || isTyping) return;
@@ -113,6 +167,70 @@ const handleSendMessage = async () => {
     setIsTyping(false);
   }
 };
+
+
+
+  const handleUploadDocument = async (file: File) => {
+    if (!file || isUploading) return;
+    const userMsg: Message = {
+      id: Date.now().toString(),
+      text: `Uploaded document: ${file.name}`,
+      sender: "user",
+      timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+    };
+
+    const aiId = (Date.now() + 1).toString();
+    const aiMsg: Message = {
+      id: aiId,
+      text: "",
+      sender: "ai",
+      timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+    };
+
+    setMessages((prev) => [...prev, userMsg, aiMsg]);
+    setIsUploading(true);
+
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      const apiBase = resolveApiBase();
+      const response = await fetch(`${apiBase}/upload_doc`, {
+        method: "POST",
+        body: formData,
+      });
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(payload?.error || "Upload failed.");
+      }
+      setMessages((prev) =>
+        prev.map((msg) =>
+          msg.id === aiId
+            ? { ...msg, text: payload?.message || "Document uploaded. Ask me anything about it!" }
+            : msg
+        )
+      );
+    } catch (err: any) {
+      setMessages((prev) =>
+        prev.map((msg) =>
+          msg.id === aiId
+            ? { ...msg, text: `[Upload error] ${err?.message ?? err}` }
+            : msg
+        )
+      );
+    } finally {
+      setIsUploading(false);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    }
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      handleUploadDocument(file);
+    }
+  };
 
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -255,21 +373,40 @@ const handleSendMessage = async () => {
       <div className="border-t border-gray-200 bg-white p-6">
         <div className="max-w-4xl mx-auto">
           {/* Message Input */}
-          <div className="relative mb-4">
-            <Input 
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              onKeyDown={handleKeyPress}
-              placeholder="Message Koko... (Enter to send, Shift+Enter for new line)"
-              className="pr-12 h-14 text-base border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500/20 rounded-xl"
+          <div className="flex items-center gap-3 mb-4">
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".txt,.md,.csv,.pdf"
+              className="hidden"
+              onChange={handleFileChange}
             />
             <Button 
-              size="icon"
-              onClick={handleSendMessage}
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-200"
+              type="button"
+              variant="outline"
+              onClick={() => fileInputRef.current?.click()}
+              disabled={isUploading}
+              aria-label="Upload document"
+              className="h-12 w-12 rounded-xl border-gray-300 text-gray-600 hover:text-blue-600 hover:border-blue-300"
             >
-              <Send className="w-4 h-4" />
+            <Paperclip className="w-5 h-5" />
             </Button>
+            <div className="relative flex-1">
+              <Input
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                onKeyDown={handleKeyPress}
+                placeholder="Message Koko... (Enter to send, Shift+Enter for new line)"
+                className="pr-12 h-14 text-base border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500/20 rounded-xl"
+              />
+              <Button
+                size="icon"
+                onClick={handleSendMessage}
+                className="absolute right-2 top-1/2 -translate-y-1/2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-200"
+              >
+                <Send className="w-4 h-4" />
+              </Button>
+            </div>
           </div>
 
           {/* Suggested Prompts */}

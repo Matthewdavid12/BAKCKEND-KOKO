@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, jsonify, Response, make_response
 from openai import OpenAI
-
 import os
 import time
 import json
@@ -15,6 +14,8 @@ import psycopg2
 from psycopg2.extras import RealDictCursor
 from werkzeug.utils import secure_filename
 from PyPDF2 import PdfReader
+from PyPDF2.errors import PdfReadError
+from io import BytesIO
 from flask_cors import CORS
 
 
@@ -116,7 +117,7 @@ def rewrite_sql(user_text: str, sql: str) -> str:
     return q
 
 SHOW_SQL_PROOF = False
-STREAM_INITIAL_DELAY_SECONDS = 0.4
+STREAM_INITIAL_DELAY_SECONDS = 0.1
 STREAM_CHUNK_SIZE = 40
 STREAM_CHUNK_DELAY_SECONDS = 0.06
 MAX_DOC_CHARS = 12000
@@ -184,7 +185,22 @@ def _extract_text_from_upload(file_storage) -> str:
         return file_storage.read().decode("utf-8", errors="replace")
     
     if ext == ".pdf":
-        reader = PdfReader(file_storage.stream)
+        try:
+            try:
+                file_storage.stream.seek(0)
+            except Exception:
+                pass
+            reader = PdfReader(file_storage.stream)
+        except PdfReadError:
+            file_storage.stream.seek(0)
+            reader = PdfReader(BytesIO(file_storage.stream.read()))
+
+        if reader.is_encrypted:
+            try:
+                reader.decrypt("")
+            except Exception as exc:
+                raise ValueError("Encrypted PDF cannot be read.") from exc
+
         pages = []
         for page in reader.pages:
             pages.append(page.extract_text() or "")
@@ -471,10 +487,25 @@ TOPIC MAPPING (GUIDE, NOT ASSUMPTIONS):
 - "Zip codes" questions should use the location zip table/view (verify exact table name via get_schema).
 - "Reason for termination" should come from the termination-related table/columns (verify via get_schema).
 
+DEFAULT FORMAT:
+1. Title
+2. Executive Summary (2–4 bullets)
+3. Main Sections with headers
+4. Tables for numeric or structured data
+5. Optional “Key Takeaways” at the end
+
+If a document is uploaded:
+- Extract and organize the content into business-style sections
+- Highlight totals, trends, and comparisons
+- Present sample data in tables
+
+Your responses should feel like a senior analyst wrote them, not a chatbot.
+
 """
 
 conversation_history = [{"role": "system", "content": SYSTEM_PROMPT}]
 MAX_HISTORY_MESSAGES = 30  # keep it light
+
 
 
 

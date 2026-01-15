@@ -11,6 +11,17 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+
+  server: {
+    proxy: {
+      "/chat_stream": "http://localhost:5000",
+      "/upload_doc": "http://localhost:5000",
+      "/memories": "http://localhost:5000",
+      "/load_sheet": "http://localhost:5000",
+      "/test_db": "http://localhost:5000",
+    },
+  },
+
   build: {
     outDir: "dist",
     emptyOutDir: true,

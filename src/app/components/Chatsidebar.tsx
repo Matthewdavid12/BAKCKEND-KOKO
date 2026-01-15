@@ -20,6 +20,7 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { cn } from "./ui/utils";
 
+
 export type Chat = {
   id: string;
   title: string;
