@@ -20,7 +20,6 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { cn } from "./ui/utils";
 
-
 export type Chat = {
   id: string;
   title: string;
@@ -58,12 +57,17 @@ export function ChatSidebar({
   const pinnedList = filtered.filter((c) => c.pinned);
   const bookmarkedList = filtered.filter((c) => c.bookmarked);
 
+
+
+  
+
   return (
-    <Sidebar className="bg-gradient-to-b from-blue-50/70 to-blue-100/40">
-      <SidebarHeader className="p-4 pb-3">
+    <Sidebar className="min-h-svh !bg-gradient-to-b !from-blue-50 !to-blue-200/70">
+      <SidebarHeader className="p-4 pb-3 !bg-transparent">
+        <div className="p-4 border-b border-blue-200/50">
         <div className="flex items-center gap-3">
-          <div className="size-9 rounded-full bg-white/70 grid place-items-center">
-            <span className="text-lg">🐨</span>
+          <div className="w-10 h-10 bg-blue-200 rounded-lg flex items-center justify-center">
+            <span className="text-3xl">🐨</span>
           </div>
           <div className="leading-tight">
             <div className="text-lg font-semibold">Koko AI</div>
@@ -73,11 +77,14 @@ export function ChatSidebar({
             <div className="text-xs text-muted-foreground">Listening</div>
           </div>
         </div>
+        </div>
+
+
 
         <div className="mt-3">
           <Button
             variant="secondary"
-            className="w-full justify-center gap-2 rounded-xl bg-white/70 hover:bg-white"
+            className="w-full bg-white hover:bg-blue-50 text-blue-600 border border-blue-200 shadow-sm"
             onClick={onNewChat}
           >
             <Plus className="size-4" />
@@ -108,7 +115,7 @@ export function ChatSidebar({
         </div>
       </SidebarHeader>
 
-      <SidebarContent className="px-3 pb-2">
+      <SidebarContent className="px-3 pb-2 !bg-transparent">
         {/* CHATS */}
         <SidebarGroup>
           <SidebarGroupLabel className="text-xs tracking-wide">
@@ -201,7 +208,7 @@ export function ChatSidebar({
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter className="p-3">
+      <SidebarFooter className="p-3 !bg-transparent">
         <SidebarSeparator className="my-2" />
         <div className="flex flex-col gap-2">
           <Button
