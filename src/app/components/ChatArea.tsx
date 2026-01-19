@@ -1,7 +1,7 @@
 import { Paperclip, Send, Sparkles } from 'lucide-react';
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import kokoImage from "../../assets/koala_thinking.png"
 import ReactMarkdown from "react-markdown";
@@ -54,6 +54,9 @@ const resolveApiBase = () => {
   const rawBase = import.meta.env.VITE_API_BASE;
   if (rawBase && rawBase.trim().length > 0) {
     return rawBase.replace(/\/+$/, "");
+  }
+  if (typeof window !== "undefined" && window.location.hostname === "localhost") {
+    return "http://localhost:5000";
   }
   return "";
 };
@@ -118,12 +121,21 @@ interface Message {
   timestamp: string;
 }
 
+interface MemoryEntry {
+  text: string;
+  created_at: string;
+}
+
+
 export function ChatArea() {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
   const [isTyping, setIsTyping] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [memoryNote, setMemoryNote] = useState('');
+  const [memories, setMemories] = useState<MemoryEntry[]>([]);
+  const [memoryStatus, setMemoryStatus] = useState<'idle' | 'saving' | 'loading'>('loading');
 
 const handleSendMessage = async () => {
   if (!message.trim() || isTyping) return;
@@ -167,6 +179,73 @@ const handleSendMessage = async () => {
     setIsTyping(false);
   }
 };
+
+  const loadMemories = async () => {
+    setMemoryStatus('loading');
+    try {
+      const apiBase = resolveApiBase();
+      const response = await fetch(`${apiBase}/memories`, { method: "GET" });
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(payload?.error || 'Failed to load memories.');
+      }
+      setMemories(Array.isArray(payload?.memories) ? payload.memories : []);
+    } catch (err) {
+      setMemories([]);
+    } finally {
+      setMemoryStatus('idle');
+    }
+  };
+
+  useEffect(() => {
+    loadMemories();
+  }, []);
+
+  const handleSaveMemory = async () => {
+    if (!memoryNote.trim() || memoryStatus === 'saving') return;
+    setMemoryStatus('saving');
+    try {
+      const apiBase = resolveApiBase();
+      const response = await fetch(`${apiBase}/memories`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: memoryNote.trim() }),
+      });
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(payload?.error || 'Failed to save memory.');
+      }
+      if (payload?.memory) {
+        setMemories((prev) => [...prev, payload.memory]);
+      } else {
+        await loadMemories();
+      }
+      setMemoryNote('');
+    } catch (err) {
+      // keep silent for now
+    } finally {
+      setMemoryStatus('idle');
+    }
+  };
+
+  const handleClearMemories = async () => {
+    if (memoryStatus === 'saving') return;
+    setMemoryStatus('saving');
+    try {
+      const apiBase = resolveApiBase();
+      const response = await fetch(`${apiBase}/memories`, { method: 'DELETE' });
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(payload?.error || 'Failed to clear memories.');
+      }
+      setMemories([]);
+    } catch (err) {
+      // keep silent for now
+    } finally {
+      setMemoryStatus('idle');
+    }
+  };
+
 
 
 
@@ -372,6 +451,43 @@ const handleSendMessage = async () => {
       {/* Input Area */}
       <div className="border-t border-gray-200 bg-white p-6">
         <div className="max-w-4xl mx-auto">
+                    <div className="mb-4 rounded-2xl border border-blue-100 bg-white/90 p-4 shadow-sm">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <h3 className="text-sm font-semibold text-gray-800">Long-term memory</h3>
+                <p className="text-xs text-gray-500">
+                  Save notes that Koko can reuse in future chats.
+                </p>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-xs text-gray-500 hover:text-red-500"
+                onClick={handleClearMemories}
+                disabled={memoryStatus === 'saving' || memories.length === 0}
+              >
+                Clear all
+              </Button>
+            </div>
+
+            <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
+              <Input
+                value={memoryNote}
+                onChange={(e) => setMemoryNote(e.target.value)}
+                placeholder="Add something Koko should remember..."
+                className="h-11 rounded-xl border-gray-300"
+              />
+              <Button
+                onClick={handleSaveMemory}
+                className="h-11 rounded-xl bg-blue-500 hover:bg-blue-600 text-white"
+                disabled={memoryStatus === 'saving' || memoryNote.trim().length === 0}
+              >
+                Save memory
+              </Button>
+            </div>
+
+          </div>
+
           {/* Message Input */}
           <div className="flex items-center gap-3 mb-4">
             <input

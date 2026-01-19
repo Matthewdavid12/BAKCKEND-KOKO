@@ -418,7 +418,7 @@ def add_cors_headers(response):
     if allowed_origin:
         response.headers["Access-Control-Allow-Origin"] = allowed_origin
         response.headers["Vary"] = "Origin"
-    response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, DELETE, OPTIONS"
     response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
     return response
 
@@ -522,8 +522,12 @@ def home():
     }), 200
 
 
-@app.route("/memories", methods=["GET", "DELETE"])
+@app.route("/memories", methods=["GET", "POST", "DELETE", "OPTIONS"])
 def memories():
+    if request.method == "OPTIONS":
+        return "", 204
+
+    # Clear all memories
     if request.method == "DELETE":
         try:
             with open(MEMORY_STORE_PATH, "w", encoding="utf-8") as f:
@@ -532,6 +536,18 @@ def memories():
             return jsonify({"error": "Failed to clear memories."}), 500
         return jsonify({"message": "Memories cleared."})
 
+    # Save a memory (POST)
+    if request.method == "POST":
+        payload = request.get_json(silent=True) or {}
+        text = (payload.get("text") or "").strip()
+
+        if not text:
+            return jsonify({"error": "Missing memory text."}), 400
+
+        entry = _save_memory(text)
+        return jsonify({"memory": entry}), 201
+
+    # Load memories (GET)
     return jsonify({"memories": _load_memories()})
 
 @app.route("/upload_doc", methods=["POST"])
