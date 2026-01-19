@@ -26,6 +26,12 @@ export type Chat = {
   pinned?: boolean;
   bookmarked?: boolean;
   updatedAt: number;
+    messages: {
+    id: string;
+    text: string;
+    sender: "user" | "ai";
+    timestamp: string;
+  }[];
 };
 
 type Props = {

@@ -1,11 +1,13 @@
 import { Paperclip, Send, Sparkles } from 'lucide-react';
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type SetStateAction } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import kokoImage from "../../assets/koala_thinking.png"
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+
+
 
 type Props = {
   message: string;
@@ -114,7 +116,7 @@ const suggestedPrompts = [
   'Risks'
 ];
 
-interface Message {
+export interface Message {
   id: string;
   text: string;
   sender: 'user' | 'ai';
@@ -127,9 +129,21 @@ interface MemoryEntry {
 }
 
 
-export function ChatArea() {
+  type ChatAreaProps = {
+    activeChatId: string | null;
+    messages: Message[];
+    onUpdateChatMessages: (chatId: string, updater: SetStateAction<Message[]>) => void;
+    onUserMessage: (chatId: string, text: string) => void;
+  };
+
+  export function ChatArea({
+    activeChatId,
+    messages,
+    onUpdateChatMessages,
+    onUserMessage,
+  }: ChatAreaProps) {
+
   const [message, setMessage] = useState('');
-  const [messages, setMessages] = useState<Message[]>([]);
   const [isTyping, setIsTyping] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -137,10 +151,21 @@ export function ChatArea() {
   const [memories, setMemories] = useState<MemoryEntry[]>([]);
   const [memoryStatus, setMemoryStatus] = useState<'idle' | 'saving' | 'loading'>('loading');
 
+    useEffect(() => {
+    setMessage('');
+    setIsTyping(false);
+    setIsUploading(false);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  }, [activeChatId]);
+
+
 const handleSendMessage = async () => {
-  if (!message.trim() || isTyping) return;
+   if (!message.trim() || isTyping || !activeChatId) return;
 
   const userText = message.trim();
+  const chatId = activeChatId;
 
   const userMsg: Message = {
     id: Date.now().toString(),
@@ -159,18 +184,19 @@ const handleSendMessage = async () => {
   };
 
   // add user + empty ai message
-  setMessages((prev) => [...prev, userMsg, aiMsg]);
+    onUserMessage(chatId, userText);
+  onUpdateChatMessages(chatId, (prev) => [...prev, userMsg, aiMsg]);
   setMessage("");
   setIsTyping(true);
 
   try {
     await streamToFlask(userText, (delta) => {
-      setMessages((prev) =>
+      onUpdateChatMessages(chatId, (prev) =>
         prev.map((m) => (m.id === aiId ? { ...m, text: m.text + delta } : m))
       );
     });
   } catch (err: any) {
-    setMessages((prev) =>
+    onUpdateChatMessages(chatId, (prev) =>
       prev.map((m) =>
         m.id === aiId ? { ...m, text: `[Server error] ${err?.message ?? err}` } : m
       )
@@ -250,7 +276,7 @@ const handleSendMessage = async () => {
 
 
   const handleUploadDocument = async (file: File) => {
-    if (!file || isUploading) return;
+     if (!file || isUploading || !activeChatId) return;
     const userMsg: Message = {
       id: Date.now().toString(),
       text: `Uploaded document: ${file.name}`,
@@ -266,8 +292,8 @@ const handleSendMessage = async () => {
       timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     };
 
-    setMessages((prev) => [...prev, userMsg, aiMsg]);
-    setIsUploading(true);
+    const chatId = activeChatId;
+    onUpdateChatMessages(chatId, (prev) => [...prev, userMsg, aiMsg]);
 
     try {
       const formData = new FormData();
@@ -281,7 +307,7 @@ const handleSendMessage = async () => {
       if (!response.ok) {
         throw new Error(payload?.error || "Upload failed.");
       }
-      setMessages((prev) =>
+      onUpdateChatMessages(chatId, (prev) =>
         prev.map((msg) =>
           msg.id === aiId
             ? { ...msg, text: payload?.message || "Document uploaded. Ask me anything about it!" }
@@ -289,7 +315,7 @@ const handleSendMessage = async () => {
         )
       );
     } catch (err: any) {
-      setMessages((prev) =>
+      onUpdateChatMessages(chatId, (prev) =>
         prev.map((msg) =>
           msg.id === aiId
             ? { ...msg, text: `[Upload error] ${err?.message ?? err}` }
