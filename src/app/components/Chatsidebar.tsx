@@ -154,64 +154,6 @@ export function ChatSidebar({
             )}
           </SidebarMenu>
         </SidebarGroup>
-
-        {/* PINNED */}
-        <SidebarGroup>
-          <SidebarGroupLabel className="text-xs tracking-wide">
-            PINNED
-          </SidebarGroupLabel>
-
-          {pinnedList.length === 0 ? (
-            <div className="px-2 py-2 text-sm text-muted-foreground">
-              No pinned chats
-            </div>
-          ) : (
-            <SidebarMenu>
-              {pinnedList
-                .slice()
-                .sort((a, b) => b.updatedAt - a.updatedAt)
-                .map((c) => (
-                  <SidebarMenuItem key={c.id}>
-                    <SidebarMenuButton
-                      isActive={activeChatId === c.id}
-                      onClick={() => onSelectChat(c.id)}
-                    >
-                      <span className="truncate">{c.title}</span>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
-            </SidebarMenu>
-          )}
-        </SidebarGroup>
-
-        {/* BOOKMARKS */}
-        <SidebarGroup>
-          <SidebarGroupLabel className="text-xs tracking-wide">
-            BOOKMARKS
-          </SidebarGroupLabel>
-
-          {bookmarkedList.length === 0 ? (
-            <div className="px-2 py-2 text-sm text-muted-foreground">
-              No bookmarks
-            </div>
-          ) : (
-            <SidebarMenu>
-              {bookmarkedList
-                .slice()
-                .sort((a, b) => b.updatedAt - a.updatedAt)
-                .map((c) => (
-                  <SidebarMenuItem key={c.id}>
-                    <SidebarMenuButton
-                      isActive={activeChatId === c.id}
-                      onClick={() => onSelectChat(c.id)}
-                    >
-                      <span className="truncate">{c.title}</span>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
-            </SidebarMenu>
-          )}
-        </SidebarGroup>
       </SidebarContent>
 
       <SidebarFooter className="p-3 !bg-transparent">
