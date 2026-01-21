@@ -10,6 +10,7 @@ from decimal import Decimal
 from uuid import UUID
 from urllib.parse import urlparse, parse_qs
 from urllib.request import urlopen
+import html
 import psycopg2
 from psycopg2.extras import RealDictCursor
 from werkzeug.utils import secure_filename
@@ -122,6 +123,7 @@ STREAM_CHUNK_SIZE = 40
 STREAM_CHUNK_DELAY_SECONDS = 0.06
 MAX_DOC_CHARS = 12000
 MAX_SHEET_CHARS = 12000
+MAX_LINK_CHARS = 12000
 ALLOWED_DOC_EXTENSIONS = {".txt", ".md", ".csv", ".pdf"}
 MEMORY_STORE_PATH = "koko_memories.json"
 
@@ -263,9 +265,10 @@ def _normalize_sheet_export_url(sheet_url: str) -> str:
 
     sheet_id = match.group(1)
     query = parse_qs(parsed.query)
-    gid = query.get("gid", [None])[0]
+    fragment = parse_qs(parsed.fragment)
+    gid = query.get("gid", [None])[0] or fragment.get("gid", [None])[0]
 
-    export_url = f"https://docs.google.com/spreadsheets/d/136xEmaUtoN72r5pxo4gAE3neB-1l4kMs9EK9H1eQO90/edit?gid=0#gid=0"
+    export_url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv"
     if gid:
         export_url += f"&gid={gid}"
     return export_url
@@ -276,6 +279,100 @@ def fetch_sheet_csv(sheet_url: str) -> str:
     with urlopen(export_url, timeout=15) as response:
         data = response.read()
     return data.decode("utf-8", errors="replace")
+
+def _is_http_url(link_url: str) -> bool:
+    parsed = urlparse(link_url)
+    return parsed.scheme in {"http", "https"} and bool(parsed.netloc)
+
+
+def _strip_html(raw_html: str) -> str:
+    cleaned = re.sub(r"(?is)<(script|style).*?>.*?</\1>", " ", raw_html)
+    cleaned = re.sub(r"(?s)<[^>]+>", " ", cleaned)
+    cleaned = html.unescape(cleaned)
+    cleaned = re.sub(r"[ \t\r\f\v]+", " ", cleaned)
+    cleaned = re.sub(r"\n{2,}", "\n", cleaned)
+    return cleaned.strip()
+
+
+def fetch_link_text(link_url: str) -> str:
+    if not _is_http_url(link_url):
+        raise ValueError("Only http(s) URLs are supported.")
+
+    if "docs.google.com/spreadsheets" in link_url:
+        return fetch_sheet_csv(link_url)
+
+    with urlopen(link_url, timeout=20) as response:
+        content_type = response.headers.get("Content-Type", "")
+        data = response.read()
+
+    if "application/pdf" in content_type or link_url.lower().endswith(".pdf"):
+        reader = PdfReader(BytesIO(data))
+        pages = [(page.extract_text() or "") for page in reader.pages]
+        return "\n".join(pages)
+
+    decoded = data.decode("utf-8", errors="replace")
+    if "text/html" in content_type or "<html" in decoded.lower():
+        return _strip_html(decoded)
+    return decoded
+
+
+def _wants_structured_email(message: str) -> bool:
+    if not message:
+        return False
+    return bool(re.search(r"\b(email|e-mail|draft)\b", message, re.IGNORECASE))
+
+
+def _extract_subject(text: str) -> str:
+    if not text:
+        return ""
+    match = re.search(r"(?im)^subject:\s*(.+)$", text)
+    return match.group(1).strip() if match else ""
+
+
+def _extract_greeting(text: str) -> str:
+    if not text:
+        return ""
+    match = re.search(r"(?im)^(hi|hello|hey)\s+(.+?),\s*$", text)
+    return match.group(0).strip() if match else ""
+
+
+def _extract_signature(text: str) -> str:
+    if not text:
+        return ""
+    lines = [line.strip() for line in text.splitlines() if line.strip()]
+    for idx, line in enumerate(lines):
+        if re.match(r"(?i)^(thank you|thanks|best|regards|sincerely),?$", line):
+            if idx + 1 < len(lines):
+                return lines[idx + 1].strip()
+    return ""
+
+
+def _strip_email_scaffold(text: str) -> str:
+    if not text:
+        return ""
+    lines = [line.rstrip() for line in text.splitlines()]
+    filtered = []
+    for line in lines:
+        if re.match(r"(?i)^subject:\s*", line):
+            continue
+        if re.match(r"(?i)^hi\b", line):
+            continue
+        if re.match(r"(?i)^(thank you|thanks|best|regards|sincerely),?$", line.strip()):
+            continue
+        if re.match(r"(?i)^(healthcare plus|koko)$", line.strip()):
+            continue
+        filtered.append(line)
+    return "\n".join([line for line in filtered if line.strip()]).strip()
+
+
+def ensure_structured_email(text: str) -> str:
+    subject = _extract_subject(text) or "Email"
+    greeting = _extract_greeting(text) or "Hi there,"
+    signature = _extract_signature(text) or "Healthcare Plus"
+    body = _strip_email_scaffold(text) or text.strip()
+    body = body.strip()
+    closing = f"Thank you,\n{signature}"
+    return f"Subject: {subject}\n\n{greeting}\n\n{body}\n\n{closing}"
 
 
 
@@ -444,6 +541,14 @@ Style:
 - If the user says “go do research” or asks for current info, use web_search and cite sources.
 - If the user is frustrated, stay calm and helpful.
 - Pause briefly to think before answering; reply at a calm, human pace.
+- When the user requests an email, always respond in a structured email format with:
+  Subject: <subject line>
+  Hi <name>,
+
+  <body paragraphs>
+
+  Thank you,
+  <sender name / team>
 
 Behavior:
 - Prefer actionable steps over long explanations.
@@ -469,30 +574,7 @@ SCHEMA RULES (CRITICAL):
   call get_schema(mode="columns") and find the exact column names.
 - If you’re unsure which table contains the data (e.g., "active clients", "terminated", "zip codes", "reason"),
   first call get_schema(mode="tables"), then get_schema(mode="columns") for the best candidate table(s).
-- Do NOT invent columns like status.
-
-BRANCHES:
-- There is NO table called branches.
-- Branch names are stored as values in branchclients.branch.
-- To list branches, use:
-  SELECT DISTINCT branch FROM branchclients ORDER BY branch;
-
-OUTPUT FORMAT:
-- When listing branches, write them in one sentence (not bullets).
-
-TOPIC MAPPING (GUIDE, NOT ASSUMPTIONS):
-- Branch list comes from branchclients.branch.
-- "Active clients" questions should use the ACTIVE CLIENTS table/view (verify exact table name via get_schema).
-- "Terminated" questions should use the TERMINATED table/view (verify exact table name via get_schema).
-- "Zip codes" questions should use the location zip table/view (verify exact table name via get_schema).
-- "Reason for termination" should come from the termination-related table/columns (verify via get_schema).
-
-DEFAULT FORMAT:
-1. Title
-2. Executive Summary (2–4 bullets)
-3. Main Sections with headers
-4. Tables for numeric or structured data
-5. Optional “Key Takeaways” at the end
+@@ -496,51 +543,51 @@ DEFAULT FORMAT:
 
 If a document is uploaded:
 - Extract and organize the content into business-style sections
@@ -518,7 +600,7 @@ def test_db():
 def home():
     return jsonify({
         "status": "Koko backend is alive 🐨",
-        "endpoints": ["/test_db", "/chat_stream", "/memories", "/upload_doc", "/load_sheet"]
+        "endpoints": ["/test_db", "/chat_stream", "/memories", "/upload_doc", "/load_sheet", "/load_link"]
     }), 200
 
 
@@ -583,6 +665,38 @@ def upload_doc():
     return jsonify({
         "message": "Document uploaded. Ask me anything about it!",
         "filename": filename,
+        "chars": len(truncated)
+    })
+
+@app.route("/load_link", methods=["POST"])
+def load_link():
+    payload = request.json or {}
+    link_url = (payload.get("url") or "").strip()
+    if not link_url:
+        return jsonify({"error": "No link URL provided."}), 400
+
+    try:
+        content = fetch_link_text(link_url)
+    except Exception as exc:
+        return jsonify({"error": f"Failed to read link: {exc}"}), 400
+
+    content = content.strip()
+    if not content:
+        return jsonify({"error": "Link appears to be empty."}), 400
+
+    truncated = content[:MAX_LINK_CHARS]
+    if len(content) > MAX_LINK_CHARS:
+        truncated += "\n\n[Link content truncated]"
+
+    conversation_history.append({
+        "role": "user",
+        "content": f"Link loaded ({link_url}):\n\n{truncated}"
+    })
+    if len(conversation_history) > (1 + MAX_HISTORY_MESSAGES):
+        conversation_history[:] = [conversation_history[0]] + conversation_history[-MAX_HISTORY_MESSAGES:]
+
+    return jsonify({
+        "message": "Link loaded. Ask me anything about it!",
         "chars": len(truncated)
     })
 
@@ -756,6 +870,9 @@ def chat_stream():
                 preview = last_sql["rows"][:5]
                 final_text += "\n\n---\nSQL used:\n" + last_sql["query"]
                 final_text += "\n\nSQL result preview (first 5 rows):\n" + json.dumps(preview, indent=2)
+
+            if _wants_structured_email(user_message):
+                final_text = ensure_structured_email(final_text)
 
             
             # Stream final answer
