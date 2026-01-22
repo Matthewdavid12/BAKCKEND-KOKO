@@ -31,6 +31,7 @@ export function ChatMessage({ message, sender, timestamp }: ChatMessageProps) {
         </div>
 
         {/* Message Bubble */}
+    
         <div className="flex flex-col">
           <div
             className={`rounded-2xl px-4 py-3 ${
@@ -39,7 +40,22 @@ export function ChatMessage({ message, sender, timestamp }: ChatMessageProps) {
                 : 'bg-white border border-gray-200 text-gray-800 shadow-sm'
             }`}
           >
-            <p className="text-sm leading-relaxed">{message}</p>
+            {(() => {
+              const blocks = message.replace(/\r\n/g, "\n").split(/\n\s*\n/);
+
+              return (
+                <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+                  {blocks.filter(Boolean).map((block, i) => (
+                    <div
+                      key={i}
+                      style={{ whiteSpace: "pre-wrap", wordBreak: "break-word", lineHeight: 1.6 }}
+                    >
+                      {block.trim()}
+                    </div>
+                  ))}
+                </div>
+              );
+            })()}
           </div>
           {timestamp && (
             <span className={`text-xs text-gray-400 mt-1 ${isUser ? 'text-right' : 'text-left'}`}>
