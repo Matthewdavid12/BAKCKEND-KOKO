@@ -1,4 +1,4 @@
-import { Paperclip, Send, Sparkles } from 'lucide-react';
+import { MonitorUp, Paperclip, Send, Sparkles } from 'lucide-react';
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { useEffect, useRef, useState, type SetStateAction } from 'react';
@@ -50,6 +50,9 @@ export function ChatMessage({ message, sender, timestamp }: Props) {
     </div>
   );
 }
+
+
+
 
 
 const resolveApiBase = () => {
@@ -150,6 +153,9 @@ interface MemoryEntry {
   const [memoryNote, setMemoryNote] = useState('');
   const [memories, setMemories] = useState<MemoryEntry[]>([]);
   const [memoryStatus, setMemoryStatus] = useState<'idle' | 'saving' | 'loading'>('loading');
+  const [isSharingScreen, setIsSharingScreen] = useState(false);
+  const screenStreamRef = useRef<MediaStream | null>(null);
+  const screenIntervalRef = useRef<number | null>(null);
 
     useEffect(() => {
     setMessage('');
@@ -159,6 +165,18 @@ interface MemoryEntry {
       fileInputRef.current.value = "";
     }
   }, [activeChatId]);
+
+    useEffect(() => {
+    return () => {
+      if (screenIntervalRef.current) {
+        window.clearInterval(screenIntervalRef.current);
+      }
+      if (screenStreamRef.current) {
+        screenStreamRef.current.getTracks().forEach((track) => track.stop());
+      }
+    };
+  }, []);
+
 
 
 const handleSendMessage = async () => {
@@ -337,6 +355,112 @@ const handleSendMessage = async () => {
     }
   };
 
+      const sendScreenSnapshot = async (dataUrl: string) => {
+    if (!activeChatId) return;
+
+    const chatId = activeChatId;
+    const userMsg: Message = {
+      id: Date.now().toString(),
+      text: "Shared a screen snapshot for Koko to review.",
+      sender: "user",
+      timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+    };
+
+    const aiId = (Date.now() + 1).toString();
+    const aiMsg: Message = {
+      id: aiId,
+      text: "",
+      sender: "ai",
+      timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+    };
+
+    onUpdateChatMessages(chatId, (prev) => [...prev, userMsg, aiMsg]);
+
+    try {
+      const apiBase = resolveApiBase();
+      const response = await fetch(`${apiBase}/screen_snapshot`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          image: dataUrl,
+          prompt: "Describe what you see on my screen.",
+        }),
+      });
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(payload?.error || "Screen share failed.");
+      }
+      onUpdateChatMessages(chatId, (prev) =>
+        prev.map((msg) =>
+          msg.id === aiId
+            ? { ...msg, text: payload?.message || "I reviewed the screen snapshot." }
+            : msg
+        )
+      );
+    } catch (err: any) {
+      onUpdateChatMessages(chatId, (prev) =>
+        prev.map((msg) =>
+          msg.id === aiId
+            ? { ...msg, text: `[Screen share error] ${err?.message ?? err}` }
+            : msg
+        )
+      );
+    }
+  };
+
+  const captureAndSendScreen = async () => {
+    if (!screenStreamRef.current) return;
+    const video = document.createElement("video");
+    video.srcObject = screenStreamRef.current;
+    await video.play();
+
+    const canvas = document.createElement("canvas");
+    canvas.width = video.videoWidth || 1280;
+    canvas.height = video.videoHeight || 720;
+    const context = canvas.getContext("2d");
+    if (!context) return;
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    const dataUrl = canvas.toDataURL("image/jpeg", 0.8);
+    await sendScreenSnapshot(dataUrl);
+  };
+
+  const stopScreenShare = () => {
+    if (screenIntervalRef.current) {
+      window.clearInterval(screenIntervalRef.current);
+      screenIntervalRef.current = null;
+    }
+    if (screenStreamRef.current) {
+      screenStreamRef.current.getTracks().forEach((track) => track.stop());
+      screenStreamRef.current = null;
+    }
+    setIsSharingScreen(false);
+  };
+
+  const handleToggleScreenShare = async () => {
+    if (isSharingScreen) {
+      stopScreenShare();
+      return;
+    }
+
+    try {
+      const stream = await navigator.mediaDevices.getDisplayMedia({
+        video: { frameRate: 5 },
+      });
+      screenStreamRef.current = stream;
+      setIsSharingScreen(true);
+      const [track] = stream.getVideoTracks();
+      if (track) {
+        track.addEventListener("ended", stopScreenShare);
+      }
+      await captureAndSendScreen();
+      screenIntervalRef.current = window.setInterval(() => {
+        captureAndSendScreen();
+      }, 8000);
+    } catch (err) {
+      stopScreenShare();
+    }
+  };
+
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -365,6 +489,12 @@ const handleSendMessage = async () => {
               <span className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
               Typing...
             </motion.span>
+          )}
+            
+          {isSharingScreen && (
+            <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-600">
+              Screen sharing on
+            </span>
           )}
         </div>
       </div>
@@ -533,6 +663,19 @@ const handleSendMessage = async () => {
             >
             <Paperclip className="w-5 h-5" />
             </Button>
+
+                        <Button
+              type="button"
+              variant="outline"
+              onClick={handleToggleScreenShare}
+              aria-label={isSharingScreen ? "Stop screen sharing" : "Start screen sharing"}
+              className={`h-12 w-12 rounded-xl border-gray-300 text-gray-600 hover:text-blue-600 hover:border-blue-300 ${
+                isSharingScreen ? "bg-blue-50 text-blue-600 border-blue-200" : ""
+              }`}
+            >
+              <MonitorUp className="w-5 h-5" />
+            </Button>
+
             <div className="relative flex-1">
               <Input
                 value={message}

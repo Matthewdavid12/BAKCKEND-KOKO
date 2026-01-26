@@ -18,6 +18,7 @@ export default defineConfig({
       "/upload_doc": "http://localhost:5000",
       "/memories": "http://localhost:5000",
       "/load_sheet": "http://localhost:5000",
+      "/screen_snapshot": "http://localhost:5000",
       "/test_db": "http://localhost:5000",
     },
   },

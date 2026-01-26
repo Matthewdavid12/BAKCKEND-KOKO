@@ -11,6 +11,7 @@ from uuid import UUID
 from urllib.parse import urlparse, parse_qs
 from urllib.request import urlopen
 import html
+import base64
 import psycopg2
 from psycopg2.extras import RealDictCursor
 from werkzeug.utils import secure_filename
@@ -688,7 +689,7 @@ def test_db():
 def home():
     return jsonify({
         "status": "Koko backend is alive 🐨",
-        "endpoints": ["/test_db", "/chat_stream", "/memories", "/upload_doc", "/load_sheet", "/load_link"]
+        "endpoints": ["/test_db", "/chat_stream", "/memories", "/upload_doc", "/load_sheet", "/load_link", "/screen_snapshot"]
     }), 200
 
 
@@ -755,6 +756,59 @@ def upload_doc():
         "filename": filename,
         "chars": len(truncated)
     })
+
+
+@app.route("/screen_snapshot", methods=["POST"])
+def screen_snapshot():
+    payload = request.get_json(silent=True) or {}
+    raw_image = (payload.get("image") or "").strip()
+    prompt = (payload.get("prompt") or "Describe what you see on my screen.").strip()
+
+    if not raw_image:
+        return jsonify({"error": "No image provided."}), 400
+
+    # Extract base64 + mime from data URL if present
+    mime = "image/png"
+    image_b64 = raw_image
+
+    if raw_image.startswith("data:"):
+        try:
+            header, encoded = raw_image.split(",", 1)  # data:image/png;base64,<...>
+            mime = header.split(";")[0].replace("data:", "") or "image/png"
+            if "image/" not in mime:
+                return jsonify({"error": "Unsupported image type."}), 400
+            image_b64 = encoded.strip()
+        except ValueError:
+            return jsonify({"error": "Invalid image data URL."}), 400
+
+    # Validate base64 (and catch padding issues)
+    try:
+        base64.b64decode(image_b64, validate=True)
+    except Exception:
+        return jsonify({"error": "Invalid base64 image data."}), 400
+
+    data_url = f"data:{mime};base64,{image_b64}"
+
+    try:
+        resp = client.responses.create(
+            model="gpt-5.2",
+            input=[
+                {
+                    "role": "user",
+                    "content": [
+                        {"type": "input_text", "text": prompt},
+                        {"type": "input_image", "image_url": data_url},
+                    ],
+                }
+            ],
+            max_output_tokens=400,
+        )
+        return jsonify({"message": resp.output_text or ""}), 200
+
+    except Exception as e:
+        app.logger.exception("OpenAI vision call failed")
+        return jsonify({"error": str(e)}), 500
+
 
 @app.route("/load_link", methods=["POST"])
 def load_link():
