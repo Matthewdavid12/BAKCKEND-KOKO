@@ -155,7 +155,7 @@ interface MemoryEntry {
   const [memoryStatus, setMemoryStatus] = useState<'idle' | 'saving' | 'loading'>('loading');
   const [isSharingScreen, setIsSharingScreen] = useState(false);
   const screenStreamRef = useRef<MediaStream | null>(null);
-  const screenIntervalRef = useRef<number | null>(null);
+  
 
     useEffect(() => {
     setMessage('');
@@ -168,9 +168,7 @@ interface MemoryEntry {
 
     useEffect(() => {
     return () => {
-      if (screenIntervalRef.current) {
-        window.clearInterval(screenIntervalRef.current);
-      }
+
       if (screenStreamRef.current) {
         screenStreamRef.current.getTracks().forEach((track) => track.stop());
       }
@@ -208,11 +206,16 @@ const handleSendMessage = async () => {
   setIsTyping(true);
 
   try {
-    await streamToFlask(userText, (delta) => {
-      onUpdateChatMessages(chatId, (prev) =>
-        prev.map((m) => (m.id === aiId ? { ...m, text: m.text + delta } : m))
-      );
-    });
+
+    if (isSharingScreen && screenStreamRef.current) {
+      await captureAndSendScreen(userText, chatId, aiId);
+    } else {
+      await streamToFlask(userText, (delta) => {
+        onUpdateChatMessages(chatId, (prev) =>
+          prev.map((m) => (m.id === aiId ? { ...m, text: m.text + delta } : m))
+        );
+      });
+    }
   } catch (err: any) {
     onUpdateChatMessages(chatId, (prev) =>
       prev.map((m) =>
@@ -348,34 +351,7 @@ const handleSendMessage = async () => {
     }
   };
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      handleUploadDocument(file);
-    }
-  };
-
-      const sendScreenSnapshot = async (dataUrl: string) => {
-    if (!activeChatId) return;
-
-    const chatId = activeChatId;
-    const userMsg: Message = {
-      id: Date.now().toString(),
-      text: "Shared a screen snapshot for Koko to review.",
-      sender: "user",
-      timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-    };
-
-    const aiId = (Date.now() + 1).toString();
-    const aiMsg: Message = {
-      id: aiId,
-      text: "",
-      sender: "ai",
-      timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-    };
-
-    onUpdateChatMessages(chatId, (prev) => [...prev, userMsg, aiMsg]);
-
+   const sendScreenSnapshot = async (dataUrl: string, prompt: string, chatId: string, aiId: string) => {
     try {
       const apiBase = resolveApiBase();
       const response = await fetch(`${apiBase}/screen_snapshot`, {
@@ -383,7 +359,7 @@ const handleSendMessage = async () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           image: dataUrl,
-          prompt: "Describe what you see on my screen.",
+          prompt: "",
         }),
       });
       const payload = await response.json().catch(() => ({}));
@@ -408,8 +384,7 @@ const handleSendMessage = async () => {
     }
   };
 
-  const captureAndSendScreen = async () => {
-    if (!screenStreamRef.current) return;
+  const captureAndSendScreen = async (prompt: string, chatId: string, aiId: string) => {    if (!screenStreamRef.current) return;
     const video = document.createElement("video");
     video.srcObject = screenStreamRef.current;
     await video.play();
@@ -421,14 +396,9 @@ const handleSendMessage = async () => {
     if (!context) return;
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
     const dataUrl = canvas.toDataURL("image/jpeg", 0.8);
-    await sendScreenSnapshot(dataUrl);
-  };
+    await sendScreenSnapshot(dataUrl, prompt, chatId, aiId);  };
 
   const stopScreenShare = () => {
-    if (screenIntervalRef.current) {
-      window.clearInterval(screenIntervalRef.current);
-      screenIntervalRef.current = null;
-    }
     if (screenStreamRef.current) {
       screenStreamRef.current.getTracks().forEach((track) => track.stop());
       screenStreamRef.current = null;
@@ -452,10 +422,6 @@ const handleSendMessage = async () => {
       if (track) {
         track.addEventListener("ended", stopScreenShare);
       }
-      await captureAndSendScreen();
-      screenIntervalRef.current = window.setInterval(() => {
-        captureAndSendScreen();
-      }, 8000);
     } catch (err) {
       stopScreenShare();
     }
@@ -651,7 +617,7 @@ const handleSendMessage = async () => {
               type="file"
               accept=".txt,.md,.csv,.pdf"
               className="hidden"
-              onChange={handleFileChange}
+      
             />
             <Button 
               type="button"
