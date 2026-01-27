@@ -293,11 +293,9 @@ const handleSendMessage = async () => {
     }
   };
 
-
-
-
   const handleUploadDocument = async (file: File) => {
      if (!file || isUploading || !activeChatId) return;
+    setIsUploading(true);
     const userMsg: Message = {
       id: Date.now().toString(),
       text: `Uploaded document: ${file.name}`,
@@ -350,6 +348,13 @@ const handleSendMessage = async () => {
       }
     }
   };
+
+   const handleFileSelection = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    handleUploadDocument(file);
+  };
+
 
    const sendScreenSnapshot = async (dataUrl: string, prompt: string, chatId: string, aiId: string) => {
     try {
@@ -617,6 +622,7 @@ const handleSendMessage = async () => {
               type="file"
               accept=".txt,.md,.csv,.pdf"
               className="hidden"
+              onChange={handleFileSelection}
       
             />
             <Button 
